@@ -1,0 +1,1702 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="data:,">
+  <title>Арабский тренажёр</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fbf8f2;
+      --ink: #141414;
+      --muted: #62605a;
+      --line: #d9d0c4;
+      --panel: #ffffff;
+      --green: #1f7a5c;
+      --green-soft: #e5f3ed;
+      --red: #b83f31;
+      --red-soft: #f8e7e2;
+      --yellow: #c88a12;
+      --yellow-soft: #fff2cf;
+      --blue: #2f6fbb;
+      --blue-soft: #e7f0fb;
+      --shadow: 0 18px 50px rgba(38, 31, 20, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(251, 248, 242, 0.96)),
+        repeating-linear-gradient(90deg, rgba(31, 122, 92, 0.07) 0 1px, transparent 1px 82px),
+        var(--paper);
+      color: var(--ink);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 8px;
+      min-height: 44px;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease, color 120ms ease;
+    }
+
+    button:hover {
+      border-color: #aaa094;
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: 0.55;
+      transform: none;
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 32px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .title-block {
+      display: grid;
+      gap: 6px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.35;
+    }
+
+    .stats {
+      display: grid;
+      grid-auto-flow: column;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .stat {
+      min-width: 90px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .stat-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .stat-value {
+      display: block;
+      margin-top: 3px;
+      font-size: 1.12rem;
+      font-weight: 800;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .main-menu {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .section-tab {
+      min-height: 54px;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 850;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .section-tab span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 650;
+      line-height: 1.25;
+    }
+
+    .section-tab.active {
+      border-color: var(--green);
+      background: var(--green);
+      color: #fff;
+    }
+
+    .section-tab.active span {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .modes,
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mode {
+      padding: 0 14px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .mode.active {
+      border-color: var(--green);
+      background: var(--green);
+      color: #fff;
+    }
+
+    .petra-mode,
+    .text-tab {
+      padding: 0 14px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .petra-mode.active,
+    .text-tab.active {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .text-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: -6px 0 18px;
+    }
+
+    .text-tab {
+      min-height: 42px;
+    }
+
+    .tool-button {
+      padding: 0 12px;
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .tool-button.warn {
+      border-color: #e1b15d;
+      background: var(--yellow-soft);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 310px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .practice,
+    .side {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .practice {
+      min-height: 560px;
+      padding: 22px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+    }
+
+    .side {
+      padding: 16px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .practice-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+
+    .mode-title {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.25;
+    }
+
+    .progress {
+      min-width: 116px;
+      text-align: right;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .stage {
+      min-height: 330px;
+      display: grid;
+      align-content: center;
+      gap: 20px;
+    }
+
+    .flashcard {
+      min-height: 318px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at top left, rgba(47, 111, 187, 0.12), transparent 36%),
+        radial-gradient(circle at bottom right, rgba(31, 122, 92, 0.12), transparent 34%),
+        #fff;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 18px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .arabic-word {
+      direction: rtl;
+      font-family: "Times New Roman", "Geeza Pro", "Noto Naskh Arabic", serif;
+      font-size: 4rem;
+      line-height: 1.45;
+      font-weight: 700;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .arabic-word.compact {
+      font-size: 3.15rem;
+    }
+
+    .russian-word {
+      font-size: 1.55rem;
+      line-height: 1.35;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .note {
+      max-width: 620px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .primary {
+      border-color: var(--green);
+      background: var(--green);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .secondary {
+      background: var(--blue-soft);
+      border-color: #9dbbe0;
+      font-weight: 750;
+    }
+
+    .danger {
+      background: var(--red-soft);
+      border-color: #e5a096;
+      font-weight: 750;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .choice {
+      min-height: 72px;
+      padding: 12px 14px;
+      text-align: left;
+      line-height: 1.3;
+      font-weight: 750;
+      overflow-wrap: anywhere;
+    }
+
+    .choice.arabic-choice {
+      direction: rtl;
+      text-align: right;
+      font-family: "Times New Roman", "Geeza Pro", "Noto Naskh Arabic", serif;
+      font-size: 1.55rem;
+      line-height: 1.55;
+    }
+
+    .choice.correct {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: #0d5139;
+    }
+
+    .choice.wrong {
+      border-color: var(--red);
+      background: var(--red-soft);
+      color: #7b1f16;
+    }
+
+    .feedback {
+      min-height: 44px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: var(--yellow-soft);
+      border: 1px solid #e2c983;
+      line-height: 1.35;
+    }
+
+    .feedback.good {
+      background: var(--green-soft);
+      border-color: #a9d5c1;
+    }
+
+    .feedback.bad {
+      background: var(--red-soft);
+      border-color: #e3a093;
+    }
+
+    .footer-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-actions button {
+      padding: 0 14px;
+      font-weight: 750;
+    }
+
+    .list-title {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .search {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .word-list {
+      display: grid;
+      gap: 6px;
+      max-height: 390px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .word-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 10px;
+      align-items: center;
+      min-height: 52px;
+      padding: 8px 10px;
+      text-align: left;
+      background: #fff;
+    }
+
+    .word-row.active {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .mini-ar {
+      direction: rtl;
+      font-family: "Times New Roman", "Geeza Pro", "Noto Naskh Arabic", serif;
+      font-size: 1.22rem;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+
+    .mini-ru {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.2;
+    }
+
+    .tag {
+      justify-self: start;
+      min-width: 44px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: #0d5139;
+      font-size: 0.78rem;
+      font-weight: 850;
+      text-align: center;
+    }
+
+    .source-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .source-strip img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #eee;
+    }
+
+    .sprint-panel {
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+      text-align: center;
+    }
+
+    .timer {
+      display: inline-grid;
+      place-items: center;
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      border: 8px solid var(--green);
+      background: #fff;
+      font-size: 2.15rem;
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    .sentence-card {
+      min-height: 318px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      padding: 24px;
+    }
+
+    .sentence-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sentence-tools button,
+    .record-actions button {
+      padding: 0 12px;
+      font-weight: 750;
+    }
+
+    .arabic-sentence {
+      direction: rtl;
+      font-family: "Times New Roman", "Geeza Pro", "Noto Naskh Arabic", serif;
+      font-size: 2.35rem;
+      line-height: 1.85;
+      font-weight: 700;
+      text-align: right;
+      letter-spacing: 0;
+    }
+
+    .translation-box {
+      display: grid;
+      gap: 6px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--blue-soft);
+      line-height: 1.45;
+    }
+
+    .translation-label {
+      color: var(--muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      font-weight: 850;
+    }
+
+    .recorder-panel {
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .record-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .record-status {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+
+    .record-status.recording {
+      color: var(--red);
+      font-weight: 850;
+    }
+
+    .recorder-panel audio {
+      width: 100%;
+    }
+
+    .sentence-list {
+      display: grid;
+      gap: 6px;
+      max-height: 430px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .sentence-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 10px;
+      align-items: start;
+      min-height: 58px;
+      padding: 8px 10px;
+      text-align: left;
+      background: #fff;
+    }
+
+    .sentence-row.active {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .mini-sentence {
+      direction: rtl;
+      display: block;
+      font-family: "Times New Roman", "Geeza Pro", "Noto Naskh Arabic", serif;
+      font-size: 1.08rem;
+      line-height: 1.45;
+      text-align: right;
+    }
+
+    .petra-source {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 900px) {
+      .topbar,
+      .toolbar,
+      .main-menu,
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .side {
+        order: 2;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app {
+        width: min(100% - 20px, 1180px);
+        padding-top: 14px;
+      }
+
+      h1 {
+        font-size: 1.55rem;
+      }
+
+      .practice {
+        min-height: 500px;
+        padding: 14px;
+      }
+
+      .practice-head,
+      .footer-actions {
+        display: grid;
+        text-align: left;
+      }
+
+      .progress {
+        text-align: left;
+      }
+
+      .arabic-word {
+        font-size: 3rem;
+      }
+
+      .arabic-word.compact {
+        font-size: 2.35rem;
+      }
+
+      .arabic-sentence {
+        font-size: 1.8rem;
+        line-height: 1.9;
+      }
+
+      .russian-word {
+        font-size: 1.25rem;
+      }
+
+      .choices,
+      .card-actions,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="title-block">
+        <h1>Арабский тренажёр</h1>
+        <p class="subtitle">Слова урока 13 и тексты с огласовками.</p>
+      </div>
+      <div class="stats" aria-label="Прогресс">
+        <div class="stat">
+          <span class="stat-label">Верно</span>
+          <span class="stat-value" id="scoreValue">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Серия</span>
+          <span class="stat-value" id="streakValue">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Ошибки</span>
+          <span class="stat-value" id="wrongValue">0</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="main-menu" aria-label="Главное меню">
+      <button class="section-tab active" data-section="vocab">
+        Квиз на сегодня
+        <span>Карточки, перевод и спринт по словам</span>
+      </button>
+      <button class="section-tab" data-section="petra">
+        Тексты
+        <span>Петра, набатеи и кофе: перевод и диктофон</span>
+      </button>
+    </nav>
+
+    <section class="app-section" id="vocabSection">
+    <nav class="toolbar" aria-label="Режимы тренировки">
+      <div class="modes">
+        <button class="mode active" id="modeCards" data-mode="cards">Карточки</button>
+        <button class="mode" id="modeQuiz" data-mode="quiz">Арабский → русский</button>
+        <button class="mode" id="modeReverse" data-mode="reverse">Русский → арабский</button>
+        <button class="mode" id="modeSprint" data-mode="sprint">Спринт</button>
+      </div>
+      <div class="tools">
+        <button class="tool-button" data-action="shuffle">Перемешать</button>
+        <button class="tool-button warn" data-action="again-wrong">Повторить ошибки</button>
+        <button class="tool-button" data-action="reset">Сброс</button>
+      </div>
+    </nav>
+
+    <main class="workspace">
+      <section class="practice" aria-live="polite">
+        <div class="practice-head">
+          <div>
+            <p class="eyebrow" id="modeKicker">Карточки</p>
+            <h2 class="mode-title" id="modeTitle">Вспомни перевод, потом открой ответ</h2>
+          </div>
+          <div class="progress" id="progressText">1 / 33</div>
+        </div>
+
+        <div class="stage" id="stage"></div>
+
+        <div class="footer-actions">
+          <button data-action="prev">Назад</button>
+          <button class="primary" data-action="next">Дальше</button>
+        </div>
+      </section>
+
+      <aside class="side">
+        <div>
+          <h2 class="list-title">Список слов</h2>
+          <p class="subtitle">Нажми на слово, чтобы сразу открыть его в карточках.</p>
+        </div>
+        <input class="search" id="searchInput" type="search" placeholder="Найти слово или перевод">
+        <div class="word-list" id="wordList"></div>
+        <div>
+          <h2 class="list-title">Фото-источник</h2>
+          <div class="source-strip" aria-label="Исходные страницы">
+            <img src="assets/IMG_2222.jpg" alt="Фрагмент страницы со словами 1-2">
+            <img src="assets/IMG_2223.PNG" alt="Страница 118">
+            <img src="assets/IMG_2224.PNG" alt="Страница 119">
+            <img src="assets/IMG_2225.jpg" alt="Страница 120">
+          </div>
+        </div>
+      </aside>
+    </main>
+    </section>
+
+    <section class="app-section hidden" id="petraSection">
+      <nav class="toolbar" aria-label="Режимы текстов">
+        <div class="modes">
+          <button class="petra-mode active" data-petra-mode="learn">Учить по предложениям</button>
+          <button class="petra-mode" data-petra-mode="translate">Русский → арабский</button>
+        </div>
+        <div class="tools">
+          <button class="tool-button" data-petra-action="toggle-arabic">Скрыть арабский</button>
+          <button class="tool-button" data-petra-action="toggle-russian">Скрыть перевод</button>
+          <button class="tool-button warn" data-petra-action="clear-recording">Стереть запись</button>
+        </div>
+      </nav>
+      <div class="text-tabs" id="textTabs" aria-label="Выбор текста">
+        <button class="text-tab active" data-text-id="petra-original">Петра: основной текст</button>
+        <button class="text-tab" data-text-id="petra-nabateans">Петра и набатеи</button>
+        <button class="text-tab" data-text-id="coffee-customs">Кофе</button>
+      </div>
+
+      <main class="workspace">
+        <section class="practice" aria-live="polite">
+          <div class="practice-head">
+            <div>
+              <p class="eyebrow" id="petraKicker">Петра</p>
+              <h2 class="mode-title" id="petraTitle">Выучи предложение, затем запиши себя по памяти</h2>
+            </div>
+            <div class="progress" id="petraProgressText">1 / 12</div>
+          </div>
+
+          <div class="stage" id="petraStage"></div>
+
+          <div class="footer-actions">
+            <button data-petra-action="prev">Назад</button>
+            <button class="primary" data-petra-action="next">Дальше</button>
+          </div>
+        </section>
+
+        <aside class="side">
+          <div>
+            <h2 class="list-title">Фрагменты</h2>
+            <p class="subtitle">Выбери фрагмент, выучи, спрячь арабский текст и проверь себя записью.</p>
+          </div>
+          <div class="sentence-list" id="petraList"></div>
+          <div>
+            <h2 class="list-title">Фото-источник</h2>
+            <div class="source-strip petra-source" aria-label="Страницы с текстом Петра">
+              <img src="assets/IMG_2259.jpg" alt="Текст Петра, начало">
+              <img src="assets/IMG_2260.jpg" alt="Лексический комментарий">
+              <img src="assets/IMG_2261.PNG" alt="Страница 71">
+              <img src="assets/IMG_2262.PNG" alt="Страница 72">
+              <img src="assets/IMG_2263.PNG" alt="Страница 73">
+              <img src="assets/IMG_2264.PNG" alt="Страница 74">
+              <img src="assets/IMG_2265.jpg" alt="Фрагмент текста Петра">
+            </div>
+          </div>
+        </aside>
+      </main>
+    </section>
+  </div>
+
+  <script id="words-data" type="application/json">
+[
+  {"id":1,"arabic":"اَلْبِنْتَاغُونُ","russian":"Пентагон","hint":"Название учреждения."},
+  {"id":2,"arabic":"بَعْدَ غَدٍ الْجُمُعَةَ","russian":"послезавтра, в пятницу","hint":"В выражении слышится васлирование артикля."},
+  {"id":3,"arabic":"مَسَاءَ الْإِثْنَيْنِ","russian":"в понедельник вечером","hint":"مَسَاءَ — вечер; الْإِثْنَيْنِ — понедельника."},
+  {"id":4,"arabic":"يَوْمُ الْجُمُعَةِ","russian":"пятница","hint":"Буквально: день пятницы."},
+  {"id":5,"arabic":"يَوْمُ الْإِثْنَيْنِ","russian":"понедельник","hint":"Буквально: день понедельника."},
+  {"id":6,"arabic":"مُوسْكُو","russian":"г. Москва","hint":"Часто произносится как [môsku]."},
+  {"id":7,"arabic":"آسِيَا الْوُسْطَى","russian":"Средняя (Центральная) Азия","hint":"الْوُسْطَى — средняя, центральная."},
+  {"id":8,"arabic":"الْأَجْهِزَةُ الْأَمْنِيَّةُ الْأَمْرِيكِيَّةُ","russian":"органы безопасности США","hint":"الْأَجْهِزَةُ — органы, аппараты; الْأَمْنِيَّةُ — безопасности."},
+  {"id":9,"arabic":"جِهَازٌ","russian":"аппарат","hint":"Множественное число: أَجْهِزَةٌ."},
+  {"id":10,"arabic":"إِجْرَاءَاتٌ اِحْتِرَازِيَّةٌ مُكَثَّفَةٌ","russian":"усиленные меры предосторожности","hint":"إِجْرَاءَاتٌ — меры; مُكَثَّفَةٌ — усиленные."},
+  {"id":11,"arabic":"اِحْتَرَزَ","russian":"остерегаться; беречься","hint":"Глагол: اِحْتَرَزَ يَحْتَرِزُ اِحْتِرَازًا."},
+  {"id":12,"arabic":"مُكَثَّفٌ","russian":"интенсивный; усиленный","hint":"Форма страдательного причастия."},
+  {"id":13,"arabic":"كَثَّفَ","russian":"усиливать","hint":"Глагол: كَثَّفَ يُكَثِّفُ تَكْثِيفًا."},
+  {"id":14,"arabic":"فِي ضَوْءِ","russian":"в свете чего-либо","hint":"Устойчивое выражение: فِي ضَوْءِ ..."},
+  {"id":15,"arabic":"ضَوْءٌ","russian":"свет","hint":"Множественное число: أَضْوَاءٌ."},
+  {"id":16,"arabic":"تَحْذِيرٌ","russian":"предупреждение; предостережение","hint":"Масдар от حَذَّرَ."},
+  {"id":17,"arabic":"حَذَّرَ","russian":"предостеречь от...","hint":"حَذَّرَ يُحَذِّرُ تَحْذِيرًا مِنْ ..."},
+  {"id":18,"arabic":"وَزِيرُ الْعَدْلِ","russian":"министр юстиции","hint":"عَدْلٌ — правосудие."},
+  {"id":19,"arabic":"عَدْلٌ","russian":"правосудие","hint":"В словосочетании وَزِيرُ الْعَدْلِ."},
+  {"id":20,"arabic":"جُون أَشْكْرُوفْت","russian":"Джон Ашкрофт","hint":"Имя собственное из текста."},
+  {"id":21,"arabic":"إِمْكَانِيَّةٌ","russian":"возможность","hint":"От корня أَمْكَنَ."},
+  {"id":22,"arabic":"أَمْكَنَ","russian":"быть возможным для кого-либо, чего-либо","hint":"أَمْكَنَ يُمْكِنُ إِمْكَانًا."},
+  {"id":23,"arabic":"فِي دَاخِلِ الْبِلَادِ وَخَارِجِهَا","russian":"внутри страны и за её пределами","hint":"دَاخِلِ — внутри; خَارِجِهَا — за ее пределами."},
+  {"id":24,"arabic":"خِلَالَ الْأَيَّامِ الْقَلِيلَةِ الْمُقْبِلَةِ","russian":"в ближайшие несколько дней","hint":"الْقَلِيلَةِ — немногие; الْمُقْبِلَةِ — предстоящие."},
+  {"id":25,"arabic":"قَلِيلٌ","russian":"малочисленный","hint":"Также: немногочисленный, малый."},
+  {"id":26,"arabic":"حَظَرَ","russian":"запретить","hint":"حَظَرَ يَحْظُرُ حَظْرًا."},
+  {"id":27,"arabic":"السُّلُطَاتُ الْجَوِّيَّةُ","russian":"авиационные власти","hint":"В тексте: ведомства, контролирующие воздушное пространство страны."},
+  {"id":28,"arabic":"سُلْطَةٌ","russian":"власть","hint":"Множественное число: سُلُطَاتٌ."},
+  {"id":29,"arabic":"جَوِّيٌّ","russian":"воздушный","hint":"Связано с воздухом, авиацией."},
+  {"id":30,"arabic":"تَحْلِيقُ الطَّائِرَاتِ","russian":"полёт самолётов","hint":"تَحْلِيقٌ — полет; الطَّائِرَاتُ — самолеты."},
+  {"id":31,"arabic":"حَلَّقَ","russian":"летать над...","hint":"حَلَّقَ يُحَلِّقُ تَحْلِيقًا فَوْقَ ..."},
+  {"id":32,"arabic":"بَعْضُ الْمَعَامِلِ النَّوَوِيَّةِ","russian":"некоторые ядерные предприятия","hint":"بَعْضُ в идафе здесь переводится как «некоторые»."},
+  {"id":33,"arabic":"مَعْمَلٌ","russian":"завод; фабрика","hint":"Множественное число: مَعَامِلُ."},
+  {"id":34,"arabic":"مَرَاكِزُ إِسْتِرَاتِيجِيَّةٌ","russian":"стратегические объекты","hint":"مَرَاكِزُ — центры, объекты."},
+  {"id":35,"arabic":"مَرْكَزٌ","russian":"центр; местонахождение; позиция","hint":"Множественное число: مَرَاكِزُ."},
+  {"id":36,"arabic":"إِسْتِرَاتِيجِيٌّ","russian":"стратегический","hint":"Прилагательное."},
+  {"id":37,"arabic":"إِسْتِرَاتِيجِيَّةٌ","russian":"стратегия","hint":"Существительное."},
+  {"id":38,"arabic":"مُهِمٌّ","russian":"важный","hint":"Действительное причастие от اِهْتَمَّ."}
+]
+  </script>
+
+  <script id="petra-data" type="application/json">
+[
+  {
+    "id": 1,
+    "arabic": "فِي أَحَدِ أَيَّامِ الْجُمُعَةِ فِي الصَّبَاحِ زَارَنِي عَارِفٌ فِي الْفُنْدُقِ.",
+    "russian": "В одно из пятничных утр Ареф посетил меня в гостинице."
+  },
+  {
+    "id": 2,
+    "arabic": "دَخَلَ الْغُرْفَةَ وَمَا كَادَ يُرَحِّبُ بِي حَتَّى صَارَ يَتَحَدَّثُ عَنْ خَالِهِ الَّذِي يَعِيشُ فِي عَمَّانَ.",
+    "russian": "Он вошёл в комнату и едва успел поздороваться со мной, как начал рассказывать о своём дяде, который живёт в Аммане."
+  },
+  {
+    "id": 3,
+    "arabic": "كَانَ عَارِفٌ مَسْرُورًا جِدًّا لِأَنَّهُ حَصَلَ عَلَى رِسَالَةٍ مِنْ خَالِهِ هَذَا تَتَضَمَّنُ حَدِيثًا مُمْتِعًا عَنِ الْبَتْرَاءِ، وَهِيَ مَدِينَةٌ مَشْهُورَةٌ تُعْتَبَرُ مِنْ أَكْثَرِ الْأَمَاكِنِ رَوْعَةً فِي الْأُرْدُنِ إِنْ لَمْ تَكُنْ فِي الشَّرْقِ الْأَوْسَطِ.",
+    "russian": "Ареф был очень рад, потому что получил от своего дяди письмо с интересным рассказом о Петре, известном городе, который считается одним из самых прекрасных мест в Иордании, если не на всём Ближнем Востоке."
+  },
+  {
+    "id": 4,
+    "arabic": "هَا هُوَ حَدِيثُ خَالِ عَارِفٍ:",
+    "russian": "Вот рассказ дяди Арефа."
+  },
+  {
+    "id": 5,
+    "arabic": "تَقَعُ مَدِينَةُ الْبَتْرَاءِ عَلَى ٢٦٢ كْم (مِئَتَيْنِ وَاثْنَيْنِ وَسِتِّينَ كِيلُومِتْرًا) جَنُوبَ الْعَاصِمَةِ عَمَّانَ إِلَى الْغَرْبِ مِنَ الطَّرِيقِ الرَّئِيسِيِّ الَّذِي يَصِلُ بَيْنَ عَمَّانَ وَمَدِينَةِ الْعَقَبَةِ.",
+    "russian": "Город Петра расположен в 262 км к югу от столицы Аммана, к западу от главной дороги, соединяющей Амман с городом Акаба."
+  },
+  {
+    "id": 6,
+    "arabic": "وَالْبَتْرَاءُ عِبَارَةٌ عَنْ مَدِينَةٍ كَامِلَةٍ مَنْحُوتَةٍ فِي الصَّخْرِ، وَمِنْ هُنَا جَاءَ اسْمُ «بِتْرَا»، وَيَعْنِي بِاللُّغَةِ الْيُونَانِيَّةِ الصَّخْرَ.",
+    "russian": "Петра представляет собой целый город, высеченный в скале; отсюда появилось название «Петра», которое по-гречески означает «скала»."
+  },
+  {
+    "id": 7,
+    "arabic": "وَالْبَتْرَاءُ تُعْرَفُ أَيْضًا بِاسْمِ الْمَدِينَةِ الْوَرْدِيَّةِ نِسْبَةً إِلَى لَوْنِ الصُّخُورِ الْمَنْحُوتَةِ مِنْهَا بُيُوتُ الْمَدِينَةِ.",
+    "russian": "Петра также известна как розовый город из-за цвета скал, из которых высечены дома города."
+  },
+  {
+    "id": 8,
+    "arabic": "وَقَدْ أَنْشَأَهَا الْأَنْبَاطُ قَبْلَ أَكْثَرَ مِنْ أَلْفَيْ سَنَةٍ فِي عَامِ أَرْبَعِمِئَةٍ قَبْلَ الْمِيلَادِ وَجَعَلُوا مِنْهَا عَاصِمَةً لَهُمْ.",
+    "russian": "Набатеи основали этот город более двух тысяч лет назад, в 400 году до н. э., и сделали его своей столицей."
+  },
+  {
+    "id": 9,
+    "arabic": "وَسَطَ الْمَدِينَةِ يُشَاهِدُ الزَّائِرُ مِئَاتِ الْمَعَالِمِ الَّتِي حَفَرَهَا وَأَنْشَأَهَا الْإِنْسَانُ.",
+    "russian": "В центре города посетитель видит сотни памятников, которые высек и создал человек."
+  },
+  {
+    "id": 10,
+    "arabic": "أَنْشَأَ الْإِنْسَانُ هَذِهِ الْهَيَاكِلَ الشَّامِخَةَ وَالْأَضْرِحَةَ الْمَلَكِيَّةَ الْبَاذِخَةَ وَهَذَا الْمَدْرَجَ الْكَبِيرَ الَّذِي يَتَّسِعُ لِثَمَانِيَةِ آلَافِ مُتَفَرِّجٍ، وَالْبُيُوتَ الصَّغِيرَةَ وَالْكَبِيرَةَ، وَالرَّدْهَاتِ وَقَاعَاتِ الِاحْتِفَالَاتِ وَقَنَوَاتِ الْمَاءِ وَالصَّهَارِيجَ وَالْحَمَّامَاتِ.",
+    "russian": "Человек создал эти высокие строения, роскошные царские гробницы, большой амфитеатр на восемь тысяч зрителей, маленькие и большие дома, вестибюли, залы торжеств, водные каналы, цистерны и бани."
+  },
+  {
+    "id": 11,
+    "arabic": "فِي الْمَدِينَةِ دَيْرٌ ضَخْمٌ يَبْلُغُ عَرْضُهُ خَمْسِينَ مِتْرًا وَارْتِفَاعُهُ خَمْسَةً وَأَرْبَعِينَ مِتْرًا، وَيَبْلُغُ ارْتِفَاعُ بَابِهِ ثَمَانِيَةَ أَمْتَارٍ.",
+    "russian": "В городе есть огромный монастырь: его ширина достигает 50 метров, высота 45 метров, а высота его двери достигает 8 метров."
+  },
+  {
+    "id": 12,
+    "arabic": "يُقَالُ إِنَّ هَذِهِ الْمَدِينَةَ الْعَرِيقَةَ الْوَارِدَ ذِكْرُهَا فِي التَّوْرَاةِ لَمْ يُسْتَكْشَفْ مِنْهَا حَتَّى الْآنَ مِنْ قِبَلِ الْعُلَمَاءِ الْأَثَرِيِّينَ إِلَّا بِنِسْبَةِ خَمْسَةَ عَشَرَ فِي الْمِئَةِ.",
+    "russian": "Говорят, что этот древний город, упомянутый в Торе, до сих пор исследован археологами только на пятнадцать процентов."
+  }
+]
+  </script>
+
+  <script id="texts-data" type="application/json">
+[
+  {
+    "id": "petra-nabateans",
+    "title": "Петра и набатеи",
+    "shortTitle": "Петра и набатеи",
+    "sentences": [
+      {"id": 1, "russian": "Петра, уникальный город,", "arabic": "تَرْتَبِطُ الْبَتْرَاءُ، الْمَدِينَةُ الْفَرِيدَةُ،"},
+      {"id": 2, "russian": "связана с набатеями.", "arabic": "بِالْأَنْبَاطِ."},
+      {"id": 3, "russian": "Набатеи — арабское бедуинское племя,", "arabic": "وَالْأَنْبَاطُ قَبِيلَةٌ عَرَبِيَّةٌ بَدَوِيَّةٌ"},
+      {"id": 4, "russian": "которое перемещалось с места на место", "arabic": "كَانَتْ تَنْتَقِلُ مِنْ مَكَانٍ إِلَى آخَرَ"},
+      {"id": 5, "russian": "в поисках пастбища.", "arabic": "بَحْثًا عَنِ الْكَلَأِ"},
+      {"id": 6, "russian": "И часть из них дошла до Петры,", "arabic": "وَوَصَلَ قِسْمٌ مِنْهَا إِلَى الْبَتْرَاءِ"},
+      {"id": 7, "russian": "в которой жили эдомитяне / идумеи,", "arabic": "الَّتِي كَانَ يَعِيشُ فِيهَا الْأَدُومِيُّونَ"},
+      {"id": 8, "russian": "и поселилась среди них", "arabic": "وَاسْتَقَرَّ بَيْنَهُمْ"},
+      {"id": 9, "russian": "в их городах и деревнях.", "arabic": "فِي مُدُنِهِمْ وَقُرَاهُمْ."},
+      {"id": 10, "russian": "И ввиду географического положения той области", "arabic": "وَنَظَرًا لِمَوْقِعِ تِلْكَ الْمِنْطَقَةِ الْجُغْرَافِيِّ"},
+      {"id": 11, "russian": "между Египтом, Палестиной, Аравийским полуостровом, Ираком и Сирией", "arabic": "بَيْنَ مِصْرَ وَفِلَسْطِينَ وَشِبْهِ الْجَزِيرَةِ الْعَرَبِيَّةِ وَالْعِرَاقِ وَسُورِيَا"},
+      {"id": 12, "russian": "они стали пересекать пустыню,", "arabic": "صَارُوا يَقْطَعُونَ الصَّحْرَاءَ"},
+      {"id": 13, "russian": "неся золото, серебро, драгоценные камни, пряности и ценную древесину", "arabic": "حَامِلِينَ الذَّهَبَ وَالْفِضَّةَ وَالْحِجَارَةَ الْكَرِيمَةَ وَالْبَهَارَاتِ وَالْأَخْشَابَ الثَّمِينَةَ"},
+      {"id": 14, "russian": "из Персии и юга Аравийского полуострова,", "arabic": "مِنْ بِلَادِ فَارِسَ وَجَنُوبِ شِبْهِ الْجَزِيرَةِ الْعَرَبِيَّةِ"},
+      {"id": 15, "russian": "и несли благовония", "arabic": "وَيَحْمِلُونَ الْبَخُورَ"},
+      {"id": 16, "russian": "и мирру", "arabic": "وَالْمُرَّ"},
+      {"id": 17, "russian": "из Хадрамаута.", "arabic": "مِنْ حَضْرَمَوْتَ."},
+      {"id": 18, "russian": "И набатеи сделали Петру", "arabic": "وَاتَّخَذَ الْأَنْبَاطُ الْبَتْرَاءَ"},
+      {"id": 19, "russian": "постоянным местом для себя,", "arabic": "مُسْتَقَرًّا لَهُمْ"},
+      {"id": 20, "russian": "где они хранили свои товары.", "arabic": "يَخْزُنُونَ فِيهِ بَضَائِعَهُمْ."},
+      {"id": 21, "russian": "И распространилось влияние набатеев", "arabic": "وَامْتَدَّ نُفُوذُ الْأَنْبَاطِ"},
+      {"id": 22, "russian": "в девяностом году до н. э.,", "arabic": "فِي عَامِ تِسْعِينَ قَبْلَ الْمِيلَادِ"},
+      {"id": 23, "russian": "после того как произошла кровопролитная битва", "arabic": "بَعْدَ أَنْ وَقَعَتْ مَعْرَكَةٌ دَامِيَةٌ"},
+      {"id": 24, "russian": "между ними и римлянами.", "arabic": "بَيْنَهُمْ وَبَيْنَ الرُّومِ."},
+      {"id": 25, "russian": "И римляне не смогли", "arabic": "وَلَمْ يَتَمَكَّنِ الرُّومُ"},
+      {"id": 26, "russian": "одержать верх над набатеями Петры", "arabic": "مِنَ التَّغَلُّبِ عَلَى أَنْبَاطِ الْبَتْرَاءِ"},
+      {"id": 27, "russian": "несмотря на повторяющиеся походы,", "arabic": "عَلَى الرَّغْمِ مِنَ الْحَمَلَاتِ الْمُتَكَرِّرَةِ،"},
+      {"id": 28, "russian": "и расширилось Набатейское царство,", "arabic": "وَاتَّسَعَتْ مَمْلَكَةُ الْأَنْبَاطِ"},
+      {"id": 29, "russian": "пока не достигло Вади ас-Сирхан на востоке,", "arabic": "حَتَّى وَصَلَتْ وَادِيَ السَّرْحَانِ شَرْقًا"},
+      {"id": 30, "russian": "реки Иордан на западе,", "arabic": "إِلَى نَهْرِ الْأُرْدُنِّ غَرْبًا"},
+      {"id": 31, "russian": "Красного моря на юге", "arabic": "وَالْبَحْرَ الْأَحْمَرَ جَنُوبًا"},
+      {"id": 32, "russian": "и Леванта на севере.", "arabic": "إِلَى بِلَادِ الشَّامِ شَمَالًا."}
+    ]
+  },
+  {
+    "id": "coffee-customs",
+    "title": "Кофе и арабские обычаи",
+    "shortTitle": "Кофе",
+    "sentences": [
+      {"id": 1, "russian": "Я хочу передать вам", "arabic": "أَوَدُّ أَنْ أَنْقُلَ لَكُمْ"},
+      {"id": 2, "russian": "то, что я услышал", "arabic": "مَا سَمِعْتُهُ"},
+      {"id": 3, "russian": "от владельца одного из кафе Александрии", "arabic": "مِنْ صَاحِبِ أَحَدِ مَقَاهِي الْإِسْكَنْدَرِيَّةِ"},
+      {"id": 4, "russian": "из рассказа о кофе и его истории.", "arabic": "مِنْ قِصَّةِ الْقَهْوَةِ وَتَارِيخِهَا."},
+      {"id": 5, "russian": "Кофе считается символом", "arabic": "تُعْتَبَرُ الْقَهْوَةُ رَمْزًا"},
+      {"id": 6, "russian": "из символов щедрости", "arabic": "مِنْ رُمُوزِ الْكَرَمِ"},
+      {"id": 7, "russian": "у арабов.", "arabic": "عِنْدَ الْعَرَبِ،"},
+      {"id": 8, "russian": "Его питьё считается проявлением", "arabic": "يُعَدُّ شُرْبُهَا مَظْهَرًا"},
+      {"id": 9, "russian": "из проявлений мужественности", "arabic": "مِنْ مَظَاهِرِ الرُّجُولَةِ"},
+      {"id": 10, "russian": "в их глазах.", "arabic": "فِي نَظَرِهِمْ."},
+      {"id": 11, "russian": "Кофе пользуется большим уважением", "arabic": "الْقَهْوَةُ تَتَمَتَّعُ بِالْكَثِيرِ مِنَ الْاِحْتِرَامِ"},
+      {"id": 12, "russian": "у арабов из числа бедуинов", "arabic": "عِنْدَ الْعَرَبِ مِنْ أَهْلِ الْبَادِيَةِ"},
+      {"id": 13, "russian": "и у жителей стран Залива", "arabic": "وَعِنْدَ الْخَلِيجِيِّينَ"},
+      {"id": 14, "russian": "и саудовцев", "arabic": "وَالسُّعُودِيِّينَ"},
+      {"id": 15, "russian": "в особенности.", "arabic": "عَلَى وَجْهِ الْخُصُوصِ،"},
+      {"id": 16, "russian": "У кофе есть племенные обычаи,", "arabic": "وَالْقَهْوَةُ لَهَا عَادَاتٌ قَبَلِيَّةٌ"},
+      {"id": 17, "russian": "общепринятые", "arabic": "مُتَعَارَفٌ عَلَيْهَا"},
+      {"id": 18, "russian": "среди людей", "arabic": "بَيْنَ النَّاسِ"},
+      {"id": 19, "russian": "и всех племён.", "arabic": "وَكُلِّ الْقَبَائِلِ."},
+      {"id": 20, "russian": "Поэтому нужно наливать кофе гостям", "arabic": "فَيَجِبُ أَنْ تَسْكُبَ الْقَهْوَةَ لِلضُّيُوفِ"},
+      {"id": 21, "russian": "стоя.", "arabic": "وَأَنْتَ وَاقِفٌ،"},
+      {"id": 22, "russian": "И держать её в левой руке", "arabic": "وَتُمْسِكَ بِهَا فِي يَدِكَ الْيُسْرَى"},
+      {"id": 23, "russian": "и подавать чашку правой рукой.", "arabic": "وَتُقَدِّمَ الْفِنْجَانَ بِالْيَدِ الْيُمْنَى."},
+      {"id": 24, "russian": "И никогда не садись", "arabic": "وَلَا تَجْلِسْ أَبَدًا"},
+      {"id": 25, "russian": "пока все присутствующие не закончат", "arabic": "حَتَّى يَفْرَغَ جَمِيعُ الْحَاضِرِينَ"},
+      {"id": 26, "russian": "пить кофе.", "arabic": "مِنْ شُرْبِ الْقَهْوَةِ."},
+      {"id": 27, "russian": "При наливании кофе", "arabic": "عِنْدَ سَكْبِ الْقَهْوَةِ"},
+      {"id": 28, "russian": "и подаче его гостям", "arabic": "وَتَقْدِيمِهَا لِلضُّيُوفِ"},
+      {"id": 29, "russian": "нужно начинать справа", "arabic": "يَجِبُ أَنْ تَبْدَأَ مِنَ الْيَمِينِ"},
+      {"id": 30, "russian": "следуя благородной Сунне,", "arabic": "عَمَلًا بِالسُّنَّةِ الشَّرِيفَةِ،"},
+      {"id": 31, "russian": "или начинать непосредственно с гостя,", "arabic": "أَوْ تَبْدَأَ بِالضَّيْفِ مُبَاشَرَةً"},
+      {"id": 32, "russian": "если он из пожилых людей.", "arabic": "إِذَا كَانَ مِنْ كِبَارِ السِّنِّ."},
+      {"id": 33, "russian": "И ты наливаешь кофе", "arabic": "وَأَنْتَ تَصُبُّ الْقَهْوَةَ"},
+      {"id": 34, "russian": "пока гость не скажет:", "arabic": "حَتَّى يَقُولَ الضَّيْفُ:"},
+      {"id": 35, "russian": "«Хватит»,", "arabic": "«بَسْ»،"},
+      {"id": 36, "russian": "или «Достаточно»,", "arabic": "أَوْ «كَافِي»،"},
+      {"id": 37, "russian": "или не покачает чашку кофе.", "arabic": "أَوْ يَهُزَّ فِنْجَانَ الْقَهْوَةِ."},
+      {"id": 38, "russian": "Искусство пить кофе —", "arabic": "مَهَارَةُ شُرْبِ الْقَهْوَةِ"},
+      {"id": 39, "russian": "чтобы пьющий покачивал чашку", "arabic": "أَنْ يَهُزَّ الشَّارِبُ الْفِنْجَانَ"},
+      {"id": 40, "russian": "направо и налево,", "arabic": "يَمِينًا وَشِمَالًا"},
+      {"id": 41, "russian": "пока кофе не остынет", "arabic": "حَتَّى تَبْرُدَ الْقَهْوَةُ"},
+      {"id": 42, "russian": "и его быстро не выпьют маленькими глотками.", "arabic": "وَيَتِمَّ اِرْتِشَافُهَا بِسُرْعَةٍ."}
+    ]
+  }
+]
+  </script>
+
+  <script>
+    const WORDS = JSON.parse(document.getElementById('words-data').textContent);
+    const PETRA_SENTENCES = JSON.parse(document.getElementById('petra-data').textContent);
+    const ADDITIONAL_TEXTS = JSON.parse(document.getElementById('texts-data').textContent);
+    const PRACTICE_TEXTS = [
+      {
+        id: 'petra-original',
+        title: 'Петра: основной текст',
+        shortTitle: 'Петра',
+        sentences: PETRA_SENTENCES
+      },
+      ...ADDITIONAL_TEXTS
+    ];
+
+    function normalizeArabic(value) {
+      return value
+        .normalize('NFKD')
+        .replace(/[\u064B-\u065F\u0670]/g, '')
+        .replace(/\u0671/g, 'ا')
+        .replace(/[أإآ]/g, 'ا')
+        .replace(/ة/g, 'ه')
+        .replace(/\s+/g, ' ')
+        .toLowerCase()
+        .trim();
+    }
+
+    function isLongArabic(value) {
+      return normalizeArabic(value).length > 18;
+    }
+
+    const els = {
+      score: document.getElementById('scoreValue'),
+      streak: document.getElementById('streakValue'),
+      wrong: document.getElementById('wrongValue'),
+      modes: [...document.querySelectorAll('.mode')],
+      stage: document.getElementById('stage'),
+      progress: document.getElementById('progressText'),
+      modeKicker: document.getElementById('modeKicker'),
+      modeTitle: document.getElementById('modeTitle'),
+      list: document.getElementById('wordList'),
+      search: document.getElementById('searchInput'),
+      sectionTabs: [...document.querySelectorAll('.section-tab')],
+      vocabSection: document.getElementById('vocabSection'),
+      petraSection: document.getElementById('petraSection'),
+      petraModes: [...document.querySelectorAll('.petra-mode')],
+      petraStage: document.getElementById('petraStage'),
+      petraProgress: document.getElementById('petraProgressText'),
+      petraKicker: document.getElementById('petraKicker'),
+      petraTitle: document.getElementById('petraTitle'),
+      petraList: document.getElementById('petraList'),
+      textTabs: [...document.querySelectorAll('[data-text-id]')]
+    };
+
+    const state = {
+      mode: 'cards',
+      index: 0,
+      order: WORDS.map((_, index) => index),
+      revealed: false,
+      locked: false,
+      score: Number(localStorage.getItem('arabicQuizScore') || 0),
+      streak: Number(localStorage.getItem('arabicQuizStreak') || 0),
+      wrongIds: new Set(JSON.parse(localStorage.getItem('arabicQuizWrongIds') || '[]')),
+      sprintTimer: null,
+      sprintLeft: 45,
+      sprintRunning: false
+    };
+
+    const textState = {
+      textId: 'petra-original',
+      index: 0,
+      mode: 'learn',
+      showArabic: true,
+      showRussian: true,
+      recorder: null,
+      stream: null,
+      chunks: [],
+      recording: false,
+      recordingSentenceId: null,
+      recordings: new Map(),
+      message: 'Записи остаются только в этом браузере до обновления страницы.'
+    };
+
+    let activeSection = 'vocab';
+
+    function saveProgress() {
+      localStorage.setItem('arabicQuizScore', String(state.score));
+      localStorage.setItem('arabicQuizStreak', String(state.streak));
+      localStorage.setItem('arabicQuizWrongIds', JSON.stringify([...state.wrongIds]));
+    }
+
+    function shuffle(values) {
+      const copy = [...values];
+      for (let i = copy.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function currentWord() {
+      return WORDS[state.order[state.index] ?? 0];
+    }
+
+    function currentText() {
+      return PRACTICE_TEXTS.find((text) => text.id === textState.textId) ?? PRACTICE_TEXTS[0];
+    }
+
+    function currentSentences() {
+      return currentText().sentences;
+    }
+
+    function currentSentence() {
+      const sentences = currentSentences();
+      return sentences[textState.index] ?? sentences[0];
+    }
+
+    function recordingKey(sentence = currentSentence()) {
+      return `${textState.textId}:${sentence.id}`;
+    }
+
+    function setSection(section) {
+      stopSprint();
+      if (textState.recording) stopRecording();
+      activeSection = section;
+      els.sectionTabs.forEach((button) => button.classList.toggle('active', button.dataset.section === section));
+      els.vocabSection.classList.toggle('hidden', section !== 'vocab');
+      els.petraSection.classList.toggle('hidden', section !== 'petra');
+      if (section === 'petra') renderPetra();
+    }
+
+    function updateStats() {
+      els.score.textContent = state.score;
+      els.streak.textContent = state.streak;
+      els.wrong.textContent = state.wrongIds.size;
+      els.progress.textContent = `${state.index + 1} / ${state.order.length}`;
+    }
+
+    function setMode(mode) {
+      stopSprint();
+      state.mode = mode;
+      state.revealed = false;
+      state.locked = false;
+      state.index = Math.min(state.index, state.order.length - 1);
+      els.modes.forEach((button) => button.classList.toggle('active', button.dataset.mode === mode));
+      render();
+    }
+
+    function setTitles(kicker, title) {
+      els.modeKicker.textContent = kicker;
+      els.modeTitle.textContent = title;
+    }
+
+    function answerPool(word, key) {
+      const wrong = shuffle(WORDS.filter((item) => item.id !== word.id)).slice(0, 3);
+      return shuffle([word, ...wrong]).map((item) => ({
+        id: item.id,
+        label: item[key],
+        correct: item.id === word.id
+      }));
+    }
+
+    function recordAnswer(word, isCorrect) {
+      if (isCorrect) {
+        state.score += 1;
+        state.streak += 1;
+        state.wrongIds.delete(word.id);
+      } else {
+        state.streak = 0;
+        state.wrongIds.add(word.id);
+      }
+      saveProgress();
+      updateStats();
+      renderList();
+    }
+
+    function renderCards() {
+      const word = currentWord();
+      setTitles('Карточки', 'Вспомни перевод, потом открой ответ');
+      els.stage.innerHTML = `
+        <div class="flashcard">
+          <div class="arabic-word ${isLongArabic(word.arabic) ? 'compact' : ''}">${word.arabic}</div>
+          <div class="${state.revealed ? '' : 'hidden'}">
+            <div class="russian-word">${word.russian}</div>
+            <p class="note">${word.hint}</p>
+          </div>
+          <button class="primary" data-action="reveal">${state.revealed ? 'Скрыть ответ' : 'Показать ответ'}</button>
+        </div>
+        <div class="card-actions">
+          <button class="danger" data-action="mark-wrong">Не помню</button>
+          <button class="secondary" data-action="mark-hard">В ошибки</button>
+          <button class="primary" data-action="mark-known">Знаю</button>
+        </div>
+      `;
+    }
+
+    function renderQuiz(reverse = false) {
+      const word = currentWord();
+      const choices = answerPool(word, reverse ? 'arabic' : 'russian');
+      const title = reverse ? 'Выбери арабское слово' : 'Выбери русский перевод';
+      setTitles(reverse ? 'Русский → арабский' : 'Арабский → русский', title);
+      els.stage.innerHTML = `
+        <div class="flashcard">
+          ${reverse
+            ? `<div class="russian-word">${word.russian}</div>`
+            : `<div class="arabic-word ${isLongArabic(word.arabic) ? 'compact' : ''}">${word.arabic}</div>`}
+          <p class="note">${word.hint}</p>
+        </div>
+        <div class="choices">
+          ${choices.map((choice) => `
+            <button class="choice ${reverse ? 'arabic-choice' : ''}" data-answer="${choice.id}" data-correct="${choice.correct}">
+              ${choice.label}
+            </button>
+          `).join('')}
+        </div>
+        <div class="feedback hidden" id="feedback"></div>
+      `;
+    }
+
+    function renderSprint() {
+      const word = currentWord();
+      const choices = answerPool(word, 'russian');
+      setTitles('Спринт', '45 секунд: выбирай перевод как можно быстрее');
+      els.stage.innerHTML = `
+        <div class="sprint-panel">
+          <div class="timer" id="timer">${state.sprintLeft}</div>
+          <div class="arabic-word ${isLongArabic(word.arabic) ? 'compact' : ''}">${word.arabic}</div>
+          <p class="note">${state.sprintRunning ? 'Серия сохраняется, ошибки попадут в повтор.' : 'Нажми старт, когда готов.'}</p>
+          <button class="primary" data-action="sprint-start">${state.sprintRunning ? 'Идет раунд' : 'Старт'}</button>
+        </div>
+        <div class="choices ${state.sprintRunning ? '' : 'hidden'}">
+          ${choices.map((choice) => `
+            <button class="choice" data-answer="${choice.id}" data-correct="${choice.correct}">
+              ${choice.label}
+            </button>
+          `).join('')}
+        </div>
+        <div class="feedback hidden" id="feedback"></div>
+      `;
+    }
+
+    function render() {
+      updateStats();
+      if (!state.order.length) {
+        state.order = WORDS.map((_, index) => index);
+        state.index = 0;
+      }
+
+      if (state.mode === 'cards') renderCards();
+      if (state.mode === 'quiz') renderQuiz(false);
+      if (state.mode === 'reverse') renderQuiz(true);
+      if (state.mode === 'sprint') renderSprint();
+      renderList();
+    }
+
+    function nextCard() {
+      state.index = (state.index + 1) % state.order.length;
+      state.revealed = false;
+      state.locked = false;
+      render();
+    }
+
+    function previousCard() {
+      state.index = (state.index - 1 + state.order.length) % state.order.length;
+      state.revealed = false;
+      state.locked = false;
+      render();
+    }
+
+    function showFeedback(isCorrect, word) {
+      const feedback = document.getElementById('feedback');
+      if (!feedback) return;
+      feedback.classList.remove('hidden', 'good', 'bad');
+      feedback.classList.add(isCorrect ? 'good' : 'bad');
+      feedback.textContent = isCorrect
+        ? `Верно: ${word.arabic} — ${word.russian}`
+        : `Правильно: ${word.arabic} — ${word.russian}`;
+    }
+
+    function chooseAnswer(button) {
+      if (state.locked && state.mode !== 'sprint') return;
+      const word = currentWord();
+      const isCorrect = button.dataset.correct === 'true';
+
+      if (state.mode !== 'sprint') state.locked = true;
+      [...document.querySelectorAll('.choice')].forEach((choice) => {
+        if (choice.dataset.correct === 'true') choice.classList.add('correct');
+      });
+      if (!isCorrect) button.classList.add('wrong');
+
+      recordAnswer(word, isCorrect);
+      showFeedback(isCorrect, word);
+
+      if (state.mode === 'sprint' && state.sprintRunning) {
+        window.setTimeout(nextCard, 280);
+      }
+    }
+
+    function stopSprint() {
+      if (state.sprintTimer) {
+        window.clearInterval(state.sprintTimer);
+        state.sprintTimer = null;
+      }
+      state.sprintRunning = false;
+    }
+
+    function startSprint() {
+      if (state.sprintRunning) return;
+      state.sprintLeft = 45;
+      state.sprintRunning = true;
+      render();
+      state.sprintTimer = window.setInterval(() => {
+        state.sprintLeft -= 1;
+        const timer = document.getElementById('timer');
+        if (timer) timer.textContent = state.sprintLeft;
+        if (state.sprintLeft <= 0) {
+          stopSprint();
+          els.stage.innerHTML = `
+            <div class="sprint-panel">
+              <div class="timer">0</div>
+              <div class="russian-word">Раунд закончен</div>
+              <p class="note">Верно: ${state.score}. Ошибок к повтору: ${state.wrongIds.size}.</p>
+              <button class="primary" data-action="sprint-start">Еще раунд</button>
+            </div>
+          `;
+        }
+      }, 1000);
+    }
+
+    function repeatWrong() {
+      const indexes = WORDS
+        .map((word, index) => state.wrongIds.has(word.id) ? index : -1)
+        .filter((index) => index >= 0);
+      if (!indexes.length) {
+        els.stage.innerHTML = `
+          <div class="flashcard">
+            <div class="russian-word">Ошибок пока нет</div>
+            <p class="note">Сделай квиз или отметь сложные карточки, и они появятся здесь.</p>
+          </div>
+        `;
+        return;
+      }
+      state.order = indexes;
+      state.index = 0;
+      state.revealed = false;
+      state.locked = false;
+      render();
+    }
+
+    function resetProgress() {
+      stopSprint();
+      state.score = 0;
+      state.streak = 0;
+      state.wrongIds.clear();
+      state.order = WORDS.map((_, index) => index);
+      state.index = 0;
+      state.revealed = false;
+      state.locked = false;
+      saveProgress();
+      render();
+    }
+
+    function renderList() {
+      const query = els.search.value.trim();
+      const active = currentWord()?.id;
+      els.list.innerHTML = WORDS
+        .filter((word) => {
+          const haystack = `${word.arabic} ${word.russian} ${word.hint}`.toLowerCase();
+          return normalizeArabic(haystack).includes(normalizeArabic(query));
+        })
+        .map((word) => `
+          <button class="word-row ${word.id === active ? 'active' : ''}" data-word-id="${word.id}">
+            <span class="tag">${state.wrongIds.has(word.id) ? 'повт.' : word.id}</span>
+            <span>
+              <span class="mini-ar">${word.arabic}</span>
+              <span class="mini-ru">${word.russian}</span>
+            </span>
+          </button>
+        `).join('');
+    }
+
+    function setPetraMode(mode) {
+      textState.mode = mode;
+      textState.showArabic = mode === 'learn';
+      textState.showRussian = true;
+      els.petraModes.forEach((button) => button.classList.toggle('active', button.dataset.petraMode === mode));
+      renderPetra();
+    }
+
+    function setPracticeText(textId) {
+      if (textState.recording || textState.textId === textId) return;
+      textState.textId = textId;
+      textState.index = 0;
+      textState.showArabic = textState.mode === 'learn';
+      textState.showRussian = true;
+      textState.message = 'Записи остаются только в этом браузере до обновления страницы.';
+      renderPetra();
+    }
+
+    function renderPetraList() {
+      const active = currentSentence()?.id;
+      els.petraList.innerHTML = currentSentences().map((sentence) => `
+        <button class="sentence-row ${sentence.id === active ? 'active' : ''}" data-petra-id="${sentence.id}">
+          <span class="tag">${textState.recordings.has(recordingKey(sentence)) ? 'rec' : sentence.id}</span>
+          <span>
+            <span class="mini-sentence">${sentence.arabic}</span>
+            <span class="mini-ru">${sentence.russian}</span>
+          </span>
+        </button>
+      `).join('');
+    }
+
+    function renderPetra() {
+      const text = currentText();
+      const sentence = currentSentence();
+      const recording = textState.recordings.get(recordingKey(sentence));
+      const isTranslate = textState.mode === 'translate';
+      const audioSource = recording ? `src="${recording.url}"` : '';
+      els.textTabs.forEach((button) => button.classList.toggle('active', button.dataset.textId === textState.textId));
+      els.petraKicker.textContent = isTranslate ? `${text.shortTitle}: русский → арабский` : text.title;
+      els.petraTitle.textContent = isTranslate
+        ? 'Сначала переведи по памяти, потом открой арабский текст'
+        : 'Выучи предложение, затем запиши себя по памяти';
+      els.petraProgress.textContent = `${textState.index + 1} / ${currentSentences().length}`;
+      els.petraStage.innerHTML = `
+        <div class="sentence-card">
+          <div class="sentence-tools">
+            <button data-petra-action="toggle-arabic">${textState.showArabic ? 'Скрыть арабский' : 'Показать арабский'}</button>
+            <button data-petra-action="toggle-russian">${textState.showRussian ? 'Скрыть перевод' : 'Показать перевод'}</button>
+          </div>
+          <div class="translation-box ${isTranslate || textState.showRussian ? '' : 'hidden'}">
+            <span class="translation-label">${isTranslate ? 'Задание' : 'Перевод'}</span>
+            <span>${sentence.russian}</span>
+          </div>
+          <div class="arabic-sentence ${textState.showArabic ? '' : 'hidden'}">${sentence.arabic}</div>
+          <p class="note">${isTranslate ? 'Произнеси арабский вариант по памяти. Потом открой текст и сравни.' : 'Прочитай несколько раз, скрой арабский текст и запиши себя без подсказки.'}</p>
+        </div>
+        <div class="recorder-panel">
+          <div class="record-actions">
+            <button class="primary" data-petra-action="record-start" ${textState.recording ? 'disabled' : ''}>Записать</button>
+            <button class="danger" data-petra-action="record-stop" ${textState.recording ? '' : 'disabled'}>Стоп</button>
+            <button class="secondary" data-petra-action="clear-recording" ${recording ? '' : 'disabled'}>Стереть запись</button>
+          </div>
+          <div class="record-status ${textState.recording ? 'recording' : ''}" id="recordStatus">
+            ${textState.recording ? 'Идёт запись. Произнеси предложение по памяти и нажми «Стоп».' : textState.message}
+          </div>
+          <audio id="recordingPlayback" controls ${audioSource} class="${recording ? '' : 'hidden'}"></audio>
+        </div>
+      `;
+      renderPetraList();
+    }
+
+    function nextSentence() {
+      if (textState.recording) return;
+      textState.index = (textState.index + 1) % currentSentences().length;
+      textState.showArabic = textState.mode === 'learn';
+      textState.showRussian = true;
+      renderPetra();
+    }
+
+    function previousSentence() {
+      if (textState.recording) return;
+      textState.index = (textState.index - 1 + currentSentences().length) % currentSentences().length;
+      textState.showArabic = textState.mode === 'learn';
+      textState.showRussian = true;
+      renderPetra();
+    }
+
+    async function startRecording() {
+      if (textState.recording) return;
+      if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
+        textState.message = 'Диктофон доступен только в современном браузере и на нормальном HTTPS.';
+        renderPetra();
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const recorder = new MediaRecorder(stream);
+        textState.stream = stream;
+        textState.recorder = recorder;
+        textState.chunks = [];
+        textState.recording = true;
+        textState.recordingSentenceId = recordingKey();
+        textState.message = 'Идёт запись.';
+
+        recorder.addEventListener('dataavailable', (event) => {
+          if (event.data.size > 0) textState.chunks.push(event.data);
+        });
+
+        recorder.addEventListener('stop', () => {
+          const sentenceId = textState.recordingSentenceId;
+          const blob = new Blob(textState.chunks, { type: recorder.mimeType || 'audio/webm' });
+          const oldRecording = textState.recordings.get(sentenceId);
+          if (oldRecording) URL.revokeObjectURL(oldRecording.url);
+          textState.recordings.set(sentenceId, {
+            blob,
+            url: URL.createObjectURL(blob)
+          });
+          textState.stream?.getTracks().forEach((track) => track.stop());
+          textState.stream = null;
+          textState.recorder = null;
+          textState.recording = false;
+          textState.recordingSentenceId = null;
+          textState.message = 'Запись готова. Нажми ▶ и сравни с арабским текстом.';
+          renderPetra();
+        });
+
+        recorder.start();
+        renderPetra();
+      } catch (error) {
+        textState.recording = false;
+        textState.message = 'Браузер не дал доступ к микрофону. Разреши микрофон для сайта и попробуй ещё раз.';
+        renderPetra();
+      }
+    }
+
+    function stopRecording() {
+      if (textState.recorder && textState.recording) {
+        textState.recorder.stop();
+      }
+    }
+
+    function clearCurrentRecording() {
+      const sentence = currentSentence();
+      const key = recordingKey(sentence);
+      const recording = textState.recordings.get(key);
+      if (recording) URL.revokeObjectURL(recording.url);
+      textState.recordings.delete(key);
+      textState.message = 'Запись удалена для этого предложения.';
+      renderPetra();
+    }
+
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('button');
+      if (!button) return;
+
+      if (button.dataset.section) setSection(button.dataset.section);
+      if (button.dataset.petraMode) setPetraMode(button.dataset.petraMode);
+      if (button.dataset.textId) setPracticeText(button.dataset.textId);
+
+      if (button.dataset.mode) setMode(button.dataset.mode);
+      if (button.dataset.answer) chooseAnswer(button);
+
+      const action = button.dataset.action;
+      if (action === 'reveal') {
+        state.revealed = !state.revealed;
+        render();
+      }
+      if (action === 'next') nextCard();
+      if (action === 'prev') previousCard();
+      if (action === 'shuffle') {
+        state.order = shuffle(WORDS.map((_, index) => index));
+        state.index = 0;
+        render();
+      }
+      if (action === 'again-wrong') repeatWrong();
+      if (action === 'reset') resetProgress();
+      if (action === 'mark-known') {
+        recordAnswer(currentWord(), true);
+        nextCard();
+      }
+      if (action === 'mark-wrong' || action === 'mark-hard') {
+        recordAnswer(currentWord(), false);
+        nextCard();
+      }
+      if (action === 'sprint-start') startSprint();
+
+      const petraAction = button.dataset.petraAction;
+      if (petraAction === 'next') nextSentence();
+      if (petraAction === 'prev') previousSentence();
+      if (petraAction === 'toggle-arabic') {
+        textState.showArabic = !textState.showArabic;
+        renderPetra();
+      }
+      if (petraAction === 'toggle-russian') {
+        textState.showRussian = !textState.showRussian;
+        renderPetra();
+      }
+      if (petraAction === 'record-start') startRecording();
+      if (petraAction === 'record-stop') stopRecording();
+      if (petraAction === 'clear-recording') clearCurrentRecording();
+
+      if (button.dataset.wordId) {
+        stopSprint();
+        const index = WORDS.findIndex((word) => word.id === Number(button.dataset.wordId));
+        state.order = WORDS.map((_, itemIndex) => itemIndex);
+        state.index = Math.max(0, index);
+        state.mode = 'cards';
+        state.revealed = true;
+        els.modes.forEach((modeButton) => modeButton.classList.toggle('active', modeButton.dataset.mode === 'cards'));
+        render();
+      }
+
+      if (button.dataset.petraId) {
+        textState.index = currentSentences().findIndex((sentence) => sentence.id === Number(button.dataset.petraId));
+        textState.index = Math.max(0, textState.index);
+        textState.showArabic = textState.mode === 'learn';
+        textState.showRussian = true;
+        renderPetra();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (activeSection === 'petra') {
+        if (event.key === 'ArrowRight') nextSentence();
+        if (event.key === 'ArrowLeft') previousSentence();
+        if (event.key === ' ') {
+          event.preventDefault();
+          textState.showArabic = !textState.showArabic;
+          renderPetra();
+        }
+        return;
+      }
+
+      if (event.key === 'ArrowRight') nextCard();
+      if (event.key === 'ArrowLeft') previousCard();
+      if (event.key === ' ') {
+        event.preventDefault();
+        if (state.mode === 'cards') {
+          state.revealed = !state.revealed;
+          render();
+        }
+      }
+    });
+
+    els.search.addEventListener('input', renderList);
+    render();
+  </script>
+</body>
+</html>
