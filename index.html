@@ -1552,6 +1552,8 @@
         textState.recorder = recorder;
         textState.chunks = [];
         textState.recording = true;
+        textState.showArabic = false;
+        textState.showRussian = true;
         textState.recordingSentenceId = recordingKey();
         textState.message = 'Идёт запись.';
 
@@ -1572,6 +1574,8 @@
           textState.stream = null;
           textState.recorder = null;
           textState.recording = false;
+          textState.showArabic = true;
+          textState.showRussian = true;
           textState.recordingSentenceId = null;
           textState.message = 'Запись готова. Нажми ▶ и сравни с арабским текстом.';
           renderPetra();
