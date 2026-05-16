@@ -813,7 +813,7 @@
       </button>
       <button class="section-tab" data-section="political">
         Тексты (полит арабский)
-        <span>Урок 13: чтение без огласовок</span>
+        <span>Урок 13: паузальное чтение</span>
       </button>
     </nav>
 
@@ -1279,9 +1279,26 @@
     }
 
     const ARABIC_VOWELS = /[\u064B-\u065F\u0640\u0670\u06D6-\u06ED]/g;
+    const ARABIC_VOWEL_MARK = /[\u064B-\u065F\u0640\u0670\u06D6-\u06ED]/;
 
     function stripVowelsIfNeeded(text) {
       return textState.hideVowels ? text.replace(ARABIC_VOWELS, '') : text;
+    }
+
+    function hasVowelMarks(text) {
+      return text.sentences.some((sentence) => ARABIC_VOWEL_MARK.test(sentence.arabic));
+    }
+
+    function readingStatusText(text) {
+      return hasVowelMarks(text)
+        ? 'Идёт запись чтения. Прочитай арабский без огласовок и нажми «Стоп».'
+        : 'Идёт запись чтения. Прочитай арабский паузально и нажми «Стоп».';
+    }
+
+    function readingDoneText(text) {
+      return hasVowelMarks(text)
+        ? 'Запись чтения готова. Нажми ▶ и при желании покажи огласовки для сверки.'
+        : 'Запись чтения готова. Нажми ▶ и сравни с текстом.';
     }
 
     function arabicSentenceHTML(sentence) {
@@ -1716,22 +1733,28 @@
       const isTranslate = textState.mode === 'translate';
       const audioSource = recording ? `src="${recording.url}"` : '';
       const textGroup = currentTextGroup();
+      const canToggleVowels = hasVowelMarks(text);
       els.textTabs.forEach((button) => {
         const inCurrentGroup = button.dataset.textGroup === textGroup;
         button.classList.toggle('hidden', !inCurrentGroup);
         button.classList.toggle('active', inCurrentGroup && button.dataset.textId === textState.textId);
       });
+      document.querySelectorAll('#petraSection > .toolbar [data-petra-action="toggle-vowels"]').forEach((button) => {
+        button.classList.toggle('hidden', !canToggleVowels);
+      });
       els.petraKicker.textContent = isTranslate ? `${text.shortTitle}: русский → арабский` : text.title;
       els.petraTitle.textContent = isTranslate
         ? 'Сначала переведи по памяти, потом открой арабский текст'
-        : 'Выучи предложение, затем запиши себя по памяти';
+        : (textGroup === 'political'
+            ? 'Прочитай фрагмент паузально, затем запиши чтение'
+            : 'Выучи предложение, затем запиши себя по памяти');
       els.petraProgress.textContent = `${textState.index + 1} / ${currentSentences().length}`;
       els.petraStage.innerHTML = `
         <div class="sentence-card">
           <div class="sentence-tools">
             <button data-petra-action="toggle-arabic">${textState.showArabic ? 'Скрыть арабский' : 'Показать арабский'}</button>
             <button data-petra-action="toggle-russian">${textState.showRussian ? 'Скрыть перевод' : 'Показать перевод'}</button>
-            <button data-petra-action="toggle-vowels">${textState.hideVowels ? 'Показать огласовки' : 'Скрыть огласовки'}</button>
+            ${canToggleVowels ? `<button data-petra-action="toggle-vowels">${textState.hideVowels ? 'Показать огласовки' : 'Скрыть огласовки'}</button>` : ''}
           </div>
           <div class="translation-box ${isTranslate || textState.showRussian ? '' : 'hidden'}">
             <span class="translation-label">${isTranslate ? 'Задание' : 'Перевод'}</span>
@@ -1743,14 +1766,14 @@
         <div class="recorder-panel">
           <div class="record-actions">
             <button class="primary" data-petra-action="record-start" ${textState.recording ? 'disabled' : ''}>Записать</button>
-            <button class="primary" data-petra-action="record-start-reading" ${textState.recording ? 'disabled' : ''} title="Запись с открытым арабским без огласовок — тренировка чтения">Записать чтение</button>
+            <button class="primary" data-petra-action="record-start-reading" ${textState.recording ? 'disabled' : ''} title="${canToggleVowels ? 'Запись с открытым арабским без огласовок — тренировка чтения' : 'Запись паузального чтения с открытым арабским'}">Записать чтение</button>
             <button class="danger" data-petra-action="record-stop" ${textState.recording ? '' : 'disabled'}>Стоп</button>
             <button class="secondary" data-petra-action="clear-recording" ${recording ? '' : 'disabled'}>Стереть запись</button>
           </div>
           <div class="record-status ${textState.recording ? 'recording' : ''}" id="recordStatus">
             ${textState.recording
               ? (textState.recordingMode === 'reading'
-                  ? 'Идёт запись чтения. Прочитай арабский без огласовок и нажми «Стоп».'
+                  ? readingStatusText(text)
                   : 'Идёт запись. Произнеси предложение по памяти и нажми «Стоп».')
               : textState.message}
           </div>
@@ -1786,7 +1809,8 @@
       }
 
       const isReading = recordingMode === 'reading';
-      if (isReading) {
+      const text = currentText();
+      if (isReading && hasVowelMarks(text)) {
         textState.hideVowels = true;
         localStorage.setItem('arabicQuizHideVowels', 'true');
       }
@@ -1803,7 +1827,7 @@
         textState.showRussian = true;
         textState.recordingSentenceId = recordingKey();
         textState.message = isReading
-          ? 'Идёт запись чтения. Прочитай арабский без огласовок и нажми «Стоп».'
+          ? readingStatusText(text)
           : 'Идёт запись.';
 
         recorder.addEventListener('dataavailable', (event) => {
@@ -1829,7 +1853,7 @@
           const wasReading = textState.recordingMode === 'reading';
           textState.recordingMode = null;
           textState.message = wasReading
-            ? 'Запись чтения готова. Нажми ▶ и при желании покажи огласовки для сверки.'
+            ? readingDoneText(text)
             : 'Запись готова. Нажми ▶ и сравни с арабским текстом.';
           renderPetra();
         });
@@ -1906,6 +1930,7 @@
         renderPetra();
       }
       if (petraAction === 'toggle-vowels') {
+        if (!hasVowelMarks(currentText())) return;
         textState.hideVowels = !textState.hideVowels;
         localStorage.setItem('arabicQuizHideVowels', String(textState.hideVowels));
         renderPetra();
