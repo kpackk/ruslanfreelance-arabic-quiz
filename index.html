@@ -140,7 +140,7 @@
 
     .main-menu {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
       margin-bottom: 12px;
     }
@@ -565,6 +565,53 @@
       letter-spacing: 0;
     }
 
+    .ar-word {
+      display: inline-block;
+      cursor: pointer;
+      border-bottom: 1px dashed transparent;
+      padding-bottom: 1px;
+      transition: color 120ms ease, border-color 120ms ease;
+    }
+
+    .ar-word:hover,
+    .ar-word.active {
+      color: var(--green);
+      border-bottom-color: var(--green);
+    }
+
+    #word-popover {
+      position: absolute;
+      z-index: 1000;
+      max-width: 280px;
+      padding: 8px 12px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      line-height: 1.35;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+      pointer-events: none;
+      direction: ltr;
+      text-align: left;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 500;
+    }
+
+    #word-popover[hidden] {
+      display: none;
+    }
+
+    #word-popover::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px 6px 0;
+      border-style: solid;
+      border-color: var(--ink) transparent transparent;
+    }
+
     .translation-box {
       display: grid;
       gap: 6px;
@@ -651,6 +698,15 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .source-strip.single-source {
+      grid-template-columns: 1fr;
+    }
+
+    .source-strip.single-source img {
+      object-fit: contain;
+      background: #fff;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -728,7 +784,7 @@
     <header class="topbar">
       <div class="title-block">
         <h1>Арабский тренажёр</h1>
-        <p class="subtitle">Слова урока 13 и тексты с огласовками.</p>
+        <p class="subtitle">Слова урока 13, тексты и политический арабский.</p>
       </div>
       <div class="stats" aria-label="Прогресс">
         <div class="stat">
@@ -754,6 +810,10 @@
       <button class="section-tab" data-section="petra">
         Тексты
         <span>Петра, набатеи и кофе: перевод и диктофон</span>
+      </button>
+      <button class="section-tab" data-section="political">
+        Тексты (полит арабский)
+        <span>Урок 13: чтение без огласовок</span>
       </button>
     </nav>
 
@@ -819,13 +879,18 @@
         <div class="tools">
           <button class="tool-button" data-petra-action="toggle-arabic">Скрыть арабский</button>
           <button class="tool-button" data-petra-action="toggle-russian">Скрыть перевод</button>
+          <button class="tool-button" data-petra-action="toggle-vowels">Скрыть огласовки</button>
           <button class="tool-button warn" data-petra-action="clear-recording">Стереть запись</button>
         </div>
       </nav>
       <div class="text-tabs" id="textTabs" aria-label="Выбор текста">
-        <button class="text-tab active" data-text-id="petra-original">Петра: основной текст</button>
-        <button class="text-tab" data-text-id="petra-nabateans">Петра и набатеи</button>
-        <button class="text-tab" data-text-id="coffee-customs">Кофе</button>
+        <button class="text-tab active" data-text-group="petra" data-text-id="petra-original">Петра: основной текст</button>
+        <button class="text-tab" data-text-group="petra" data-text-id="petra-nabateans">Петра и набатеи</button>
+        <button class="text-tab" data-text-group="petra" data-text-id="coffee-customs">Кофе</button>
+        <button class="text-tab" data-text-group="petra" data-text-id="2026-05-06-coffee-respect">06.05 — Уважение к кофе</button>
+        <button class="text-tab" data-text-group="petra" data-text-id="2026-05-06-library">06.05 — Александрийская библиотека</button>
+        <button class="text-tab" data-text-group="petra" data-text-id="2026-05-11-khan-azhar-eid">11.05 — Курбан-байрам</button>
+        <button class="text-tab hidden" data-text-group="political" data-text-id="political-lesson13-message11">Урок 13 — сообщение № 11</button>
       </div>
 
       <main class="workspace">
@@ -854,7 +919,7 @@
           <div class="sentence-list" id="petraList"></div>
           <div>
             <h2 class="list-title">Фото-источник</h2>
-            <div class="source-strip petra-source" aria-label="Страницы с текстом Петра">
+            <div class="source-strip petra-source" id="petraSourceStrip" aria-label="Страницы с текстом Петра">
               <img src="assets/IMG_2259.jpg" alt="Текст Петра, начало">
               <img src="assets/IMG_2260.jpg" alt="Лексический комментарий">
               <img src="assets/IMG_2261.PNG" alt="Страница 71">
@@ -868,6 +933,8 @@
       </main>
     </section>
   </div>
+
+  <div id="word-popover" hidden></div>
 
   <script id="words-data" type="application/json">
 [
@@ -1066,6 +1133,88 @@
       {"id": 41, "russian": "пока кофе не остынет", "arabic": "حَتَّى تَبْرُدَ الْقَهْوَةُ"},
       {"id": 42, "russian": "и его быстро не выпьют маленькими глотками.", "arabic": "وَيَتِمَّ اِرْتِشَافُهَا بِسُرْعَةٍ."}
     ]
+  },
+  {
+    "id": "2026-05-06-coffee-respect",
+    "title": "Уважение бедуинов и арабов к кофе",
+    "shortTitle": "Кофе — уважение",
+    "sentences": [
+      {"id": 1, "russian": "И указывает на уважение бедуинов и арабов в прошлом к кофе то,", "arabic": "وَيَدُلُّ عَلَى ٱحْتِرَامِ ٱلْبَدْوِ وَٱلْعَرَبِ فِي ٱلسَّابِقِ لِلْقَهْوَةِ", "words": [{"ar":"وَيَدُلُّ","ru":"и указывает"},{"ar":"عَلَى","ru":"на"},{"ar":"ٱحْتِرَامِ","ru":"уважение"},{"ar":"ٱلْبَدْوِ","ru":"бедуинов"},{"ar":"وَٱلْعَرَبِ","ru":"и арабов"},{"ar":"فِي","ru":"в"},{"ar":"ٱلسَّابِقِ","ru":"прошлом"},{"ar":"لِلْقَهْوَةِ","ru":"к кофе"}]},
+      {"id": 2, "russian": "что если у одного из них была просьба к шейху племени или к хозяину,", "arabic": "أَنَّهُ إِذَا كَانَ لِأَحَدِهِمْ طَلَبٌ عِنْدَ شَيْخِ ٱلْعَشِيرَةِ أَوِ ٱلْمُضِيفِ،", "words": [{"ar":"أَنَّهُ","ru":"что (поистине, дело в том, что)"},{"ar":"إِذَا","ru":"если"},{"ar":"كَانَ","ru":"был / было"},{"ar":"لِأَحَدِهِمْ","ru":"у одного из них"},{"ar":"طَلَبٌ","ru":"просьба"},{"ar":"عِنْدَ","ru":"у"},{"ar":"شَيْخِ","ru":"шейха"},{"ar":"ٱلْعَشِيرَةِ","ru":"племени / рода"},{"ar":"أَوِ","ru":"или"},{"ar":"ٱلْمُضِيفِ،","ru":"принимающего гостя / хозяина"}]},
+      {"id": 3, "russian": "он клал свою чашку, наполненную кофе, на землю и не пил её.", "arabic": "كَانَ يَضَعُ فِنْجَانَهُ وَهُوَ مَلِيءٌ بِٱلْقَهْوَةِ عَلَى ٱلْأَرْضِ وَلاَ يَشْرَبُهُ.", "words": [{"ar":"كَانَ","ru":"был (вспомогательный — образует прошедшее «клал»)"},{"ar":"يَضَعُ","ru":"кладёт"},{"ar":"فِنْجَانَهُ","ru":"свою чашку"},{"ar":"وَهُوَ","ru":"и он (она — о чашке м. р.)"},{"ar":"مَلِيءٌ","ru":"наполнен(а)"},{"ar":"بِٱلْقَهْوَةِ","ru":"кофе (тв. п.)"},{"ar":"عَلَى","ru":"на"},{"ar":"ٱلْأَرْضِ","ru":"землю"},{"ar":"وَلاَ","ru":"и не"},{"ar":"يَشْرَبُهُ.","ru":"пьёт её"}]},
+      {"id": 4, "russian": "И замечает это хозяин или шейх племени,", "arabic": "فَيُلاَحِظُ ٱلْمُضِيفُ أَوْ شَيْخُ ٱلْعَشِيرَةِ ذَلِكَ،", "words": [{"ar":"فَيُلاَحِظُ","ru":"и замечает"},{"ar":"ٱلْمُضِيفُ","ru":"хозяин (принимающий гостя)"},{"ar":"أَوْ","ru":"или"},{"ar":"شَيْخُ","ru":"шейх"},{"ar":"ٱلْعَشِيرَةِ","ru":"племени / рода"},{"ar":"ذَلِكَ،","ru":"это"}]},
+      {"id": 5, "russian": "и упреждает его вопросом: «Какова твоя нужда?»", "arabic": "فَيُبَادِرُهُ بِٱلسُّؤَالِ: «مَا حَاجَتُكَ؟»", "words": [{"ar":"فَيُبَادِرُهُ","ru":"и упреждает его (опережает)"},{"ar":"بِٱلسُّؤَالِ:","ru":"вопросом"},{"ar":"«مَا","ru":"какова / что"},{"ar":"حَاجَتُكَ؟»","ru":"твоя нужда / потребность"}]},
+      {"id": 6, "russian": "И если он её выполнял для него, то приказывал ему выпить его кофе.", "arabic": "فَإِذَا سَدَّهَا لَهُ، أَمَرَهُ بِشُرْبِ قَهْوَتِهِ.", "words": [{"ar":"فَإِذَا","ru":"и если"},{"ar":"سَدَّهَا","ru":"удовлетворил её / выполнил её"},{"ar":"لَهُ،","ru":"для него"},{"ar":"أَمَرَهُ","ru":"приказал ему"},{"ar":"بِشُرْبِ","ru":"выпить (букв. питьём)"},{"ar":"قَهْوَتِهِ.","ru":"его кофе"}]},
+      {"id": 7, "russian": "Если же воздержался гость от питья кофе, а хозяин проигнорировал это и не спрашивал его, какова его просьба,", "arabic": "وَإِذَا ٱمْتَنَعَ ٱلضَّيْفُ عَنْ شُرْبِ ٱلْقَهْوَةِ وَتَجَاهَلَهُ ٱلْمُضِيفُ وَلَمْ يَسْأَلْهُ مَا طَلَبُهُ", "words": [{"ar":"وَإِذَا","ru":"и если"},{"ar":"ٱمْتَنَعَ","ru":"воздержался / отказался"},{"ar":"ٱلضَّيْفُ","ru":"гость"},{"ar":"عَنْ","ru":"от"},{"ar":"شُرْبِ","ru":"питья"},{"ar":"ٱلْقَهْوَةِ","ru":"кофе"},{"ar":"وَتَجَاهَلَهُ","ru":"и проигнорировал его"},{"ar":"ٱلْمُضِيفُ","ru":"хозяин"},{"ar":"وَلَمْ","ru":"и не"},{"ar":"يَسْأَلْهُ","ru":"спросил его"},{"ar":"مَا","ru":"какова / что"},{"ar":"طَلَبُهُ","ru":"его просьба"}]},
+      {"id": 8, "russian": "то это считается большим оскорблением в его адрес,", "arabic": "فَإِنَّ ذَلِكَ يُعَدُّ عَيْبًا كَبِيرًا فِي حَقِّهِ،", "words": [{"ar":"فَإِنَّ","ru":"то поистине"},{"ar":"ذَلِكَ","ru":"это"},{"ar":"يُعَدُّ","ru":"считается"},{"ar":"عَيْبًا","ru":"оскорблением / изъяном"},{"ar":"كَبِيرًا","ru":"большим"},{"ar":"فِي","ru":"в"},{"ar":"حَقِّهِ،","ru":"его адрес / в отношении него (букв. в его праве)"}]},
+      {"id": 9, "russian": "и распространяется весть об этом в племени.", "arabic": "وَيَنْتَشِرُ أَمْرُ هَذَا ٱلْخَبَرِ فِي ٱلْقَبِيلَةِ.", "words": [{"ar":"وَيَنْتَشِرُ","ru":"и распространяется"},{"ar":"أَمْرُ","ru":"дело"},{"ar":"هَذَا","ru":"этой / этого"},{"ar":"ٱلْخَبَرِ","ru":"вести / новости"},{"ar":"فِي","ru":"в"},{"ar":"ٱلْقَبِيلَةِ.","ru":"племени"}]},
+      {"id": 10, "russian": "У кофе долгая история.", "arabic": "لِلْقَهْوَةِ تَارِيخٌ طَوِيلٌ.", "words": [{"ar":"لِلْقَهْوَةِ","ru":"у кофе (букв. для кофе)"},{"ar":"تَارِيخٌ","ru":"история"},{"ar":"طَوِيلٌ.","ru":"долгая / длинная"}]},
+      {"id": 11, "russian": "И гласит легенда, что в далёкое время", "arabic": "فَتَقُولُ ٱلْأُسْطُورَةُ إِنَّهُ فِي زَمَنٍ بَعِيدٍ", "words": [{"ar":"فَتَقُولُ","ru":"и гласит / говорит"},{"ar":"ٱلْأُسْطُورَةُ","ru":"легенда"},{"ar":"إِنَّهُ","ru":"что (поистине)"},{"ar":"فِي","ru":"в"},{"ar":"زَمَنٍ","ru":"время"},{"ar":"بَعِيدٍ","ru":"далёкое"}]},
+      {"id": 12, "russian": "заметил один эфиопский пастух коз, что его скот", "arabic": "لاَحَظَ رَاعِي مَاعِزٍ حَبَشِيٌّ أَنَّ مَاشِيَتَهُ", "words": [{"ar":"لاَحَظَ","ru":"заметил"},{"ar":"رَاعِي","ru":"пастух"},{"ar":"مَاعِزٍ","ru":"коз"},{"ar":"حَبَشِيٌّ","ru":"эфиопский"},{"ar":"أَنَّ","ru":"что"},{"ar":"مَاشِيَتَهُ","ru":"его скот"}]},
+      {"id": 13, "russian": "становится более активным и бодрым,", "arabic": "تُصْبِحُ أَكْثَرَ نَشَاطًا وَحَيَوِيَّةً", "words": [{"ar":"تُصْبِحُ","ru":"становится"},{"ar":"أَكْثَرَ","ru":"более"},{"ar":"نَشَاطًا","ru":"активным (букв. в активности)"},{"ar":"وَحَيَوِيَّةً","ru":"и бодрым / полным жизни"}]},
+      {"id": 14, "russian": "когда ест определённый вид диких деревьев.", "arabic": "عِنْدَمَا تَأْكُلُ مِنْ نَوْعٍ مُعَيَّنٍ مِنَ ٱلْأَشْجَارِ ٱلْبَرِّيَّةِ.", "words": [{"ar":"عِنْدَمَا","ru":"когда"},{"ar":"تَأْكُلُ","ru":"ест"},{"ar":"مِنْ","ru":"из"},{"ar":"نَوْعٍ","ru":"вида"},{"ar":"مُعَيَّنٍ","ru":"определённого"},{"ar":"مِنَ","ru":"из"},{"ar":"ٱلْأَشْجَارِ","ru":"деревьев"},{"ar":"ٱلْبَرِّيَّةِ.","ru":"диких"}]},
+      {"id": 15, "russian": "И передал он это своё наблюдение своим сверстникам,", "arabic": "فَنَقَلَ مُلاَحَظَتَهُ هَذِهِ إِلَى أَقْرَانِهِ", "words": [{"ar":"فَنَقَلَ","ru":"и передал"},{"ar":"مُلاَحَظَتَهُ","ru":"своё наблюдение"},{"ar":"هَذِهِ","ru":"это"},{"ar":"إِلَى","ru":"к"},{"ar":"أَقْرَانِهِ","ru":"своим сверстникам / ровесникам"}]},
+      {"id": 16, "russian": "и особенно тем, которым было трудно бодрствовать ночью.", "arabic": "وَبِوَجْهٍ خَاصٍّ ٱلَّذِينَ كَانَ يَصْعُبُ عَلَيْهِمُ ٱلسَّهَرُ لَيْلاً.", "words": [{"ar":"وَبِوَجْهٍ","ru":"и образом (букв. лицом)"},{"ar":"خَاصٍّ","ru":"особенным (выр. «особенно»)"},{"ar":"ٱلَّذِينَ","ru":"которым / тем, которые"},{"ar":"كَانَ","ru":"был (вспомог. — «было трудно»)"},{"ar":"يَصْعُبُ","ru":"трудно"},{"ar":"عَلَيْهِمُ","ru":"для них"},{"ar":"ٱلسَّهَرُ","ru":"бодрствование / бдение"},{"ar":"لَيْلاً.","ru":"ночью"}]},
+      {"id": 17, "russian": "И было это первым открытием плодов кофейного дерева.", "arabic": "فَكَانَ ذَلِكَ ٱلِٱكْتِشَافَ ٱلْأَوَّلَ لِثِمَارِ شَجَرَةِ ٱلْبُنِّ.", "words": [{"ar":"فَكَانَ","ru":"и было"},{"ar":"ذَلِكَ","ru":"это"},{"ar":"ٱلِٱكْتِشَافَ","ru":"открытием"},{"ar":"ٱلْأَوَّلَ","ru":"первым"},{"ar":"لِثِمَارِ","ru":"плодов"},{"ar":"شَجَرَةِ","ru":"дерева"},{"ar":"ٱلْبُنِّ.","ru":"кофейного (зёрна)"}]}
+    ]
+  },
+  {
+    "id": "2026-05-06-library",
+    "title": "Александрийская библиотека",
+    "shortTitle": "Библиотека",
+    "sentences": [
+      {"id": 1, "russian": "И после прочтения статьи я мечтал о посещении Александрийской библиотеки.", "arabic": "وَبَعْدَ قِرَاءَةِ ٱلْمَقَالِ كُنْتُ أَحْلُمُ بِزِيَارَةِ مَكْتَبَةِ ٱلْإِسْكَنْدَرِيَّةِ.", "words": [{"ar":"وَبَعْدَ","ru":"и после"},{"ar":"قِرَاءَةِ","ru":"прочтения / чтения"},{"ar":"ٱلْمَقَالِ","ru":"статьи"},{"ar":"كُنْتُ","ru":"я был"},{"ar":"أَحْلُمُ","ru":"мечтаю / вижу сон"},{"ar":"بِزِيَارَةِ","ru":"о посещении (тв. п.)"},{"ar":"مَكْتَبَةِ","ru":"библиотеки"},{"ar":"ٱلْإِسْكَنْدَرِيَّةِ.","ru":"Александрийской"}]},
+      {"id": 2, "russian": "И как же велика была моя радость, когда Ариф сообщил нам, что он намеревается поехать в Александрию по работе там,", "arabic": "وَكَمْ كَانَ فَرَحِي عَظِيمًا عِنْدَمَا أَخْبَرَنَا عَارِفٌ بِأَنَّهُ يَعْتَزِمُ أَنْ يَذْهَبَ إِلَى ٱلْإِسْكَنْدَرِيَّةِ فِي ٱلْعَمَلِ هُنَاكَ", "words": [{"ar":"وَكَمْ","ru":"и сколько / как же"},{"ar":"كَانَ","ru":"была"},{"ar":"فَرَحِي","ru":"моя радость"},{"ar":"عَظِيمًا","ru":"велика / великой"},{"ar":"عِنْدَمَا","ru":"когда"},{"ar":"أَخْبَرَنَا","ru":"сообщил нам"},{"ar":"عَارِفٌ","ru":"Ариф (имя)"},{"ar":"بِأَنَّهُ","ru":"что он"},{"ar":"يَعْتَزِمُ","ru":"намеревается"},{"ar":"أَنْ","ru":"чтобы (модальное)"},{"ar":"يَذْهَبَ","ru":"поехать / отправиться"},{"ar":"إِلَى","ru":"в"},{"ar":"ٱلْإِسْكَنْدَرِيَّةِ","ru":"Александрию"},{"ar":"فِي","ru":"по"},{"ar":"ٱلْعَمَلِ","ru":"работе"},{"ar":"هُنَاكَ","ru":"там"}]},
+      {"id": 3, "russian": "предлагая нам поехать с ним на борту его машины.", "arabic": "مُقْتَرِحًا عَلَيْنَا ٱلذَّهَابَ مَعَهُ عَلَى مَتْنِ سَيَّارَتِهِ.", "words": [{"ar":"مُقْتَرِحًا","ru":"предлагая"},{"ar":"عَلَيْنَا","ru":"нам"},{"ar":"ٱلذَّهَابَ","ru":"поездку / отправление"},{"ar":"مَعَهُ","ru":"с ним"},{"ar":"عَلَى","ru":"на"},{"ar":"مَتْنِ","ru":"борту"},{"ar":"سَيَّارَتِهِ.","ru":"его машины"}]},
+      {"id": 4, "russian": "Я очень обрадовался тому, что услышал,", "arabic": "سُرِرْتُ كَثِيرًا لِمَا سَمِعْتُهُ", "words": [{"ar":"سُرِرْتُ","ru":"я обрадовался"},{"ar":"كَثِيرًا","ru":"очень / много"},{"ar":"لِمَا","ru":"тому, что"},{"ar":"سَمِعْتُهُ","ru":"я услышал это"}]},
+      {"id": 5, "russian": "ведь редко представляется подобный случай,", "arabic": "فَقَلَّ أَنْ تَسْنَحَ مِثْلُ هَذِهِ ٱلْفُرْصَةِ", "words": [{"ar":"فَقَلَّ","ru":"ведь редко (букв. мало)"},{"ar":"أَنْ","ru":"чтобы / что"},{"ar":"تَسْنَحَ","ru":"представляется / выпадает"},{"ar":"مِثْلُ","ru":"подобный / как"},{"ar":"هَذِهِ","ru":"этого"},{"ar":"ٱلْفُرْصَةِ","ru":"случая / возможности"}]},
+      {"id": 6, "russian": "и поэтому это его предложение было приятным сюрпризом для нас.", "arabic": "وَلِذَلِكَ كَانَ ٱقْتِرَاحُهُ هَذَا مُفَاجَأَةً سَارَّةً بِٱلنِّسْبَةِ إِلَيْنَا.", "words": [{"ar":"وَلِذَلِكَ","ru":"и поэтому"},{"ar":"كَانَ","ru":"было"},{"ar":"ٱقْتِرَاحُهُ","ru":"его предложение"},{"ar":"هَذَا","ru":"это"},{"ar":"مُفَاجَأَةً","ru":"сюрпризом / неожиданностью"},{"ar":"سَارَّةً","ru":"приятным / радующим"},{"ar":"بِٱلنِّسْبَةِ","ru":"по отношению"},{"ar":"إِلَيْنَا.","ru":"к нам"}]},
+      {"id": 7, "russian": "Однако мой друг начал сомневаться в возможности его осуществления по причине необходимости посещения занятий в университете,", "arabic": "غَيْرَ أَنَّ صَدِيقِي بَدَأَ يَشُكُّ فِي إِمْكَانِيَّةِ تَطْبِيقِهِ بِسَبَبِ وُجُودِ ضَرُورَةٍ لِحُضُورِ ٱلدُّرُوسِ فِي ٱلْجَامِعَةِ", "words": [{"ar":"غَيْرَ","ru":"однако / кроме"},{"ar":"أَنَّ","ru":"что (после غير)"},{"ar":"صَدِيقِي","ru":"мой друг"},{"ar":"بَدَأَ","ru":"начал"},{"ar":"يَشُكُّ","ru":"сомневаться"},{"ar":"فِي","ru":"в"},{"ar":"إِمْكَانِيَّةِ","ru":"возможности"},{"ar":"تَطْبِيقِهِ","ru":"его осуществления / применения"},{"ar":"بِسَبَبِ","ru":"по причине"},{"ar":"وُجُودِ","ru":"наличия"},{"ar":"ضَرُورَةٍ","ru":"необходимости"},{"ar":"لِحُضُورِ","ru":"посещения / присутствия на"},{"ar":"ٱلدُّرُوسِ","ru":"занятиях / уроках"},{"ar":"فِي","ru":"в"},{"ar":"ٱلْجَامِعَةِ","ru":"университете"}]},
+      {"id": 8, "russian": "но я положил конец любым сомнениям, ответив на предложение согласием,", "arabic": "لَكِنِّي وَضَعْتُ حَدًّا لِأَيِّ شُكُوكٍ رَادًّا عَلَى ٱلِٱقْتِرَاحِ بِٱلْمُوَافَقَةِ", "words": [{"ar":"لَكِنِّي","ru":"но я"},{"ar":"وَضَعْتُ","ru":"положил / поставил"},{"ar":"حَدًّا","ru":"конец / предел"},{"ar":"لِأَيِّ","ru":"любым"},{"ar":"شُكُوكٍ","ru":"сомнениям"},{"ar":"رَادًّا","ru":"отвечая"},{"ar":"عَلَى","ru":"на"},{"ar":"ٱلِٱقْتِرَاحِ","ru":"предложение"},{"ar":"بِٱلْمُوَافَقَةِ","ru":"согласием"}]},
+      {"id": 9, "russian": "тем более что поездка состоится в дни четверга и пятницы, в которые нет занятий в университете.", "arabic": "خَاصَّةً وَأَنَّ ٱلْجَوْلَةَ سَتَتِمُّ فِي يَوْمَيِ ٱلْخَمِيسِ وَٱلْجُمُعَةِ ٱللَّذَيْنِ لَا تُوجَدُ فِيهِمَا ٱلدُّرُوسُ فِي ٱلْجَامِعَةِ.", "words": [{"ar":"خَاصَّةً","ru":"особенно / тем более"},{"ar":"وَأَنَّ","ru":"и что"},{"ar":"ٱلْجَوْلَةَ","ru":"поездку / тур"},{"ar":"سَتَتِمُّ","ru":"состоится / будет осуществлена"},{"ar":"فِي","ru":"в"},{"ar":"يَوْمَيِ","ru":"два дня (двойственное число)"},{"ar":"ٱلْخَمِيسِ","ru":"четверга"},{"ar":"وَٱلْجُمُعَةِ","ru":"и пятницы"},{"ar":"ٱللَّذَيْنِ","ru":"которые (двойств. число)"},{"ar":"لَا","ru":"не"},{"ar":"تُوجَدُ","ru":"имеются / находятся"},{"ar":"فِيهِمَا","ru":"в них (двойств.)"},{"ar":"ٱلدُّرُوسُ","ru":"занятия"},{"ar":"فِي","ru":"в"},{"ar":"ٱلْجَامِعَةِ.","ru":"университете"}]},
+      {"id": 10, "russian": "Мы узнали во время нашего пребывания в Александрии много важных вещей об Александрийской библиотеке,", "arabic": "عَرَفْنَا أَثْنَاءَ تَوَاجُدِنَا فِي ٱلْإِسْكَنْدَرِيَّةِ أَشْيَاءَ هَامَّةً كَثِيرَةً عَنْ مَكْتَبَةِ ٱلْإِسْكَنْدَرِيَّةِ", "words": [{"ar":"عَرَفْنَا","ru":"мы узнали"},{"ar":"أَثْنَاءَ","ru":"во время"},{"ar":"تَوَاجُدِنَا","ru":"нашего пребывания"},{"ar":"فِي","ru":"в"},{"ar":"ٱلْإِسْكَنْدَرِيَّةِ","ru":"Александрии"},{"ar":"أَشْيَاءَ","ru":"вещей"},{"ar":"هَامَّةً","ru":"важных"},{"ar":"كَثِيرَةً","ru":"много / многих"},{"ar":"عَنْ","ru":"об / о"},{"ar":"مَكْتَبَةِ","ru":"библиотеке"},{"ar":"ٱلْإِسْكَنْدَرِيَّةِ","ru":"Александрийской"}]},
+      {"id": 11, "russian": "ведь она сегодня одно из гигантских культурных сооружений, которые были созданы.", "arabic": "فَهِيَ ٱلْيَوْمَ أَحَدُ ٱلصُّرُوحِ ٱلثَّقَافِيَّةِ ٱلْعِمْلَاقَةِ ٱلَّتِي تَمَّ إِنْشَاؤُهَا.", "words": [{"ar":"فَهِيَ","ru":"ведь она"},{"ar":"ٱلْيَوْمَ","ru":"сегодня"},{"ar":"أَحَدُ","ru":"один из / одно из"},{"ar":"ٱلصُّرُوحِ","ru":"сооружений / монументов"},{"ar":"ٱلثَّقَافِيَّةِ","ru":"культурных"},{"ar":"ٱلْعِمْلَاقَةِ","ru":"гигантских"},{"ar":"ٱلَّتِي","ru":"которые / которая"},{"ar":"تَمَّ","ru":"состоялось / совершено"},{"ar":"إِنْشَاؤُهَا.","ru":"их создание / её строительство"}]},
+      {"id": 12, "russian": "И состоялось её открытие на большом торжестве в 2002 году,", "arabic": "وَتَمَّ ٱفْتِتَاحُهَا فِي ٱحْتِفَالِيَّةٍ كُبْرَى عَامَ ٢٠٠٢", "words": [{"ar":"وَتَمَّ","ru":"и состоялось"},{"ar":"ٱفْتِتَاحُهَا","ru":"её открытие"},{"ar":"فِي","ru":"на"},{"ar":"ٱحْتِفَالِيَّةٍ","ru":"торжестве / празднестве"},{"ar":"كُبْرَى","ru":"большом / великом"},{"ar":"عَامَ","ru":"в году"},{"ar":"٢٠٠٢","ru":"две тысячи второй (alfayni wa-thnayn)"}]},
+      {"id": 13, "russian": "чтобы она стала маяком культуры, окном Египта в мир и окном для мира в Египет.", "arabic": "لِتَكُونَ مَنَارَةً لِلثَّقَافَةِ وَنَافِذَةَ مِصْرَ عَلَى ٱلْعَالَمِ وَنَافِذَةً لِلْعَالَمِ عَلَى مِصْرَ.", "words": [{"ar":"لِتَكُونَ","ru":"чтобы стала / была"},{"ar":"مَنَارَةً","ru":"маяком"},{"ar":"لِلثَّقَافَةِ","ru":"для культуры"},{"ar":"وَنَافِذَةَ","ru":"и окном"},{"ar":"مِصْرَ","ru":"Египта"},{"ar":"عَلَى","ru":"в / на"},{"ar":"ٱلْعَالَمِ","ru":"мир"},{"ar":"وَنَافِذَةً","ru":"и окном"},{"ar":"لِلْعَالَمِ","ru":"для мира"},{"ar":"عَلَى","ru":"в / на"},{"ar":"مِصْرَ.","ru":"Египет"}]}
+    ]
+  },
+  {
+    "id": "2026-05-11-khan-azhar-eid",
+    "title": "Хан аль-Халили, Аль-Азхар и Курбан-байрам",
+    "shortTitle": "Курбан-байрам",
+    "sentences": [
+      {"id": 1, "russian": "Мы покинули район Хан аль-Халили через два часа и направились в университет Аль-Азхар,", "arabic": "تَرَكْنَا مَنْطِقَةَ خَانِ ٱلْخَلِيلِيِّ بَعْدَ سَاعَتَيْنِ وَتَوَجَّهْنَا إِلَى جَامِعَةِ ٱلْأَزْهَرِ", "words": [{"ar":"تَرَكْنَا","ru":"мы покинули"},{"ar":"مَنْطِقَةَ","ru":"район"},{"ar":"خَانِ ٱلْخَلِيلِيِّ","ru":"Хан аль-Халили"},{"ar":"بَعْدَ سَاعَتَيْنِ","ru":"через два часа"},{"ar":"وَتَوَجَّهْنَا","ru":"и направились"},{"ar":"إِلَى","ru":"в / к"},{"ar":"جَامِعَةِ ٱلْأَزْهَرِ","ru":"университет Аль-Азхар"}]},
+      {"id": 2, "russian": "здание которого находится очень близко к рынку.", "arabic": "ٱلَّتِي يَقَعُ مَبْنَاهَا قَرِيبًا جِدًّا مِنَ ٱلسُّوقِ.", "words": [{"ar":"ٱلَّتِي","ru":"который / которая"},{"ar":"يَقَعُ","ru":"находится"},{"ar":"مَبْنَاهَا","ru":"его здание"},{"ar":"قَرِيبًا جِدًّا","ru":"очень близко"},{"ar":"مِنَ ٱلسُّوقِ.","ru":"от рынка / к рынку"}]},
+      {"id": 3, "russian": "И по дороге к университету мы увидели на улицах города много людей, особенно детей в новой праздничной одежде,", "arabic": "وَفِي طَرِيقِنَا إِلَى ٱلْجَامِعَةِ شَاهَدْنَا فِي شَوَارِعِ ٱلْمَدِينَةِ كَثِيرًا مِنَ ٱلنَّاسِ وَخَاصَّةً ٱلْأَطْفَالَ بِمَلَابِسِ ٱلْعِيدِ ٱلْجَدِيدَةِ", "words": [{"ar":"وَفِي طَرِيقِنَا","ru":"и по дороге"},{"ar":"إِلَى ٱلْجَامِعَةِ","ru":"к университету"},{"ar":"شَاهَدْنَا","ru":"мы увидели"},{"ar":"فِي شَوَارِعِ ٱلْمَدِينَةِ","ru":"на улицах города"},{"ar":"كَثِيرًا مِنَ ٱلنَّاسِ","ru":"много людей"},{"ar":"وَخَاصَّةً","ru":"особенно"},{"ar":"ٱلْأَطْفَالَ","ru":"детей"},{"ar":"بِمَلَابِسِ ٱلْعِيدِ ٱلْجَدِيدَةِ","ru":"в новой праздничной одежде"}]},
+      {"id": 4, "russian": "несмотря на то, что был вторник.", "arabic": "رَغْمَ أَنَّهُ كَانَ يَوْمَ ٱلثُّلَاثَاءِ.", "words": [{"ar":"رَغْمَ","ru":"несмотря на"},{"ar":"أَنَّهُ","ru":"что"},{"ar":"كَانَ","ru":"был"},{"ar":"يَوْمَ ٱلثُّلَاثَاءِ.","ru":"день вторника / вторник"}]},
+      {"id": 5, "russian": "И тут мы вспомнили, что сказал нам Ариф вчера: что начался рассвет сегодняшнего дня — Курбан-байрама, который называют Большим праздником.", "arabic": "وَإِذَا بِنَا نَتَذَكَّرُ مَا قَالَ لَنَا عَارِفٌ أَمْسِ فَبَدَأَ فَجْرُ ٱلْيَوْمِ عِيدُ ٱلْأَضْحَى ٱلَّذِي يُطْلَقُ عَلَيْهِ ٱلْعِيدَ ٱلْكَبِيرَ.", "words": [{"ar":"وَإِذَا بِنَا","ru":"и тут мы"},{"ar":"نَتَذَكَّرُ","ru":"вспоминаем"},{"ar":"مَا قَالَ لَنَا","ru":"то, что сказал нам"},{"ar":"عَارِفٌ أَمْسِ","ru":"Ариф вчера"},{"ar":"فَبَدَأَ","ru":"и начался"},{"ar":"فَجْرُ ٱلْيَوْمِ","ru":"рассвет сегодняшнего дня"},{"ar":"عِيدُ ٱلْأَضْحَى","ru":"Курбан-байрам"},{"ar":"ٱلَّذِي يُطْلَقُ عَلَيْهِ","ru":"который называют"},{"ar":"ٱلْعِيدَ ٱلْكَبِيرَ.","ru":"Большим праздником"}]},
+      {"id": 6, "russian": "И этот праздник имеет особое место в сердцах мусульман, потому что они отмечают в нём дни хаджа в Мекку.", "arabic": "وَلِهَذَا ٱلْعِيدِ مَكَانَةٌ خَاصَّةٌ فِي قُلُوبِ ٱلْمُسْلِمِينَ لِأَنَّهُمْ يَحْتَفِلُونَ فِيهِ بِأَيَّامِ ٱلْحَجِّ إِلَى مَكَّةَ.", "words": [{"ar":"وَلِهَذَا ٱلْعِيدِ","ru":"и у этого праздника"},{"ar":"مَكَانَةٌ خَاصَّةٌ","ru":"особое место"},{"ar":"فِي قُلُوبِ ٱلْمُسْلِمِينَ","ru":"в сердцах мусульман"},{"ar":"لِأَنَّهُمْ","ru":"потому что они"},{"ar":"يَحْتَفِلُونَ فِيهِ","ru":"отмечают в нём"},{"ar":"بِأَيَّامِ ٱلْحَجِّ","ru":"дни хаджа"},{"ar":"إِلَى مَكَّةَ.","ru":"в Мекку"}]},
+      {"id": 7, "russian": "А хадж, как вы знаете, — один из пяти столпов ислама.", "arabic": "وَٱلْحَجُّ، كَمَا تَعْلَمُونَ، رُكْنٌ مِنْ أَرْكَانِ ٱلْإِسْلَامِ ٱلْخَمْسَةِ.", "words": [{"ar":"وَٱلْحَجُّ","ru":"а хадж"},{"ar":"كَمَا تَعْلَمُونَ","ru":"как вы знаете"},{"ar":"رُكْنٌ","ru":"столп"},{"ar":"مِنْ أَرْكَانِ ٱلْإِسْلَامِ","ru":"из столпов ислама"},{"ar":"ٱلْخَمْسَةِ.","ru":"пяти"}]},
+      {"id": 8, "russian": "И в дни праздника египтянки готовят сладости и пирожные, и принимают родственников и друзей.", "arabic": "وَفِي أَيَّامِ ٱلْعِيدِ تَطْبُخُ ٱلْمِصْرِيَّاتُ ٱلْحَلْوِيَّاتِ وَٱلْكَعْكَ وَيَسْتَقْبِلْنَ ٱلْأَقَارِبَ وَٱلْأَصْدِقَاءَ.", "words": [{"ar":"وَفِي أَيَّامِ ٱلْعِيدِ","ru":"и в дни праздника"},{"ar":"تَطْبُخُ","ru":"готовят"},{"ar":"ٱلْمِصْرِيَّاتُ","ru":"египтянки"},{"ar":"ٱلْحَلْوِيَّاتِ","ru":"сладости"},{"ar":"وَٱلْكَعْكَ","ru":"и пирожные / печенье"},{"ar":"وَيَسْتَقْبِلْنَ","ru":"и принимают"},{"ar":"ٱلْأَقَارِبَ","ru":"родственников"},{"ar":"وَٱلْأَصْدِقَاءَ.","ru":"и друзей"}]},
+      {"id": 9, "russian": "И поздравляют люди друг друга с благословенным праздником и обмениваются поздравительными открытками,", "arabic": "وَيُهَنِّئُ ٱلنَّاسُ بَعْضُهُمُ ٱلْبَعْضَ بِٱلْعِيدِ ٱلْمُبَارَكِ وَيَتَبَادَلُونَ بِطَاقَاتِ ٱلتَّهَانِي", "words": [{"ar":"وَيُهَنِّئُ","ru":"и поздравляют"},{"ar":"ٱلنَّاسُ","ru":"люди"},{"ar":"بَعْضُهُمُ ٱلْبَعْضَ","ru":"друг друга"},{"ar":"بِٱلْعِيدِ ٱلْمُبَارَكِ","ru":"с благословенным праздником"},{"ar":"وَيَتَبَادَلُونَ","ru":"и обмениваются"},{"ar":"بِطَاقَاتِ ٱلتَّهَانِي","ru":"поздравительными открытками"}]},
+      {"id": 10, "russian": "которые содержат фразы, такие как «Каждый год — и вы благополучны», или «Счастливого праздника и долгих лет», или «Наилучших пожеланий со счастливым праздником».", "arabic": "ٱلَّتِي تَحْمِلُ عِبَارَاتٍ مِثْلَ «كُلُّ عَامٍ وَأَنْتُمْ بِخَيْرٍ» أَوْ «عِيدٌ سَعِيدٌ وَعُمْرٌ مَدِيدٌ» أَوْ «أَطْيَبُ ٱلتَّمَنِّيَاتِ بِٱلْعِيدِ ٱلسَّعِيدِ».", "words": [{"ar":"ٱلَّتِي","ru":"которые"},{"ar":"تَحْمِلُ عِبَارَاتٍ","ru":"содержат фразы"},{"ar":"مِثْلَ","ru":"такие как"},{"ar":"«كُلُّ عَامٍ وَأَنْتُمْ بِخَيْرٍ»","ru":"«Каждый год - и вы благополучны»"},{"ar":"أَوْ","ru":"или"},{"ar":"«عِيدٌ سَعِيدٌ وَعُمْرٌ مَدِيدٌ»","ru":"«Счастливого праздника и долгих лет»"},{"ar":"أَوْ","ru":"или"},{"ar":"«أَطْيَبُ ٱلتَّمَنِّيَاتِ بِٱلْعِيدِ ٱلسَّعِيدِ».","ru":"«Наилучших пожеланий со счастливым праздником»"}]},
+      {"id": 11, "russian": "Кроме того, раздаётся мясо нуждающимся по случаю благословенного Курбан-байрама.", "arabic": "كَمَا تُوَزَّعُ ٱللُّحُومُ عَلَى ٱلْفُقَرَاءِ بِمُنَاسَبَةِ عِيدِ ٱلْأَضْحَى ٱلْمُبَارَكِ.", "words": [{"ar":"كَمَا","ru":"кроме того / также"},{"ar":"تُوَزَّعُ","ru":"раздаётся"},{"ar":"ٱللُّحُومُ","ru":"мясо"},{"ar":"عَلَى ٱلْفُقَرَاءِ","ru":"нуждающимся / бедным"},{"ar":"بِمُنَاسَبَةِ","ru":"по случаю"},{"ar":"عِيدِ ٱلْأَضْحَى ٱلْمُبَارَكِ.","ru":"благословенного Курбан-байрама"}]}
+    ]
+  },
+  {
+    "id": "political-lesson13-message11",
+    "title": "Урок 13: сообщение № 11",
+    "shortTitle": "Политический арабский",
+    "group": "political",
+    "sourceLabel": "Страница урока 13",
+    "sourceImages": [
+      {"src": "assets/yakovenko-lesson13-page117.png", "alt": "Урок 13, сообщение № 11"}
+    ],
+    "sentences": [
+      {"id": 1, "russian": "Министерство обороны США «Пентагон» объявило, что министр обороны Дональд Рамсфелд послезавтра, в пятницу, направится в Москву", "arabic": "أعلنت وزارة الدفاع الأمريكية \"البنتاغون\" أن وزير الدفاع دونالد رامسفيلد سيتوجه بعد غد الجمعة إلى موسكو"},
+      {"id": 2, "russian": "а затем в ряд государств Центральной Азии.", "arabic": "وبعدها إلى عدد من الدول في آسيا الوسطى."},
+      {"id": 3, "russian": "С другой стороны, американские органы безопасности приняли усиленные меры предосторожности", "arabic": "من جهة أخرى اتخذت الأجهزة الأمنية الأمريكية إجراءات احترازية مكثفة"},
+      {"id": 4, "russian": "в свете предупреждения министра юстиции США Джона Ашкрофта вечером в понедельник", "arabic": "في ضوء تحذير وزير العدل الأمريكي جون أشكروفت مساء الاثنين"},
+      {"id": 5, "russian": "о возможности того, что США подвергнутся новым террористическим нападениям", "arabic": "من إمكان تعرض الولايات المتحدة لاعتداءات إرهابية جديدة"},
+      {"id": 6, "russian": "внутри страны и за её пределами в ближайшие несколько дней.", "arabic": "في داخل البلاد وخارجها خلال الأيام القليلة المقبلة."},
+      {"id": 7, "russian": "Авиационные власти запретили полёты самолётов", "arabic": "وحظرت السلطات الجوية تحليق الطائرات"},
+      {"id": 8, "russian": "над некоторыми ядерными предприятиями и другими важными стратегическими объектами.", "arabic": "فوق بعض المعامل النووية ومراكز استراتيجية مهمة أخرى."}
+    ]
   }
 ]
   </script>
@@ -1074,14 +1223,35 @@
     const WORDS = JSON.parse(document.getElementById('words-data').textContent);
     const PETRA_SENTENCES = JSON.parse(document.getElementById('petra-data').textContent);
     const ADDITIONAL_TEXTS = JSON.parse(document.getElementById('texts-data').textContent);
+    const DEFAULT_TEXT_BY_SECTION = {
+      petra: 'petra-original',
+      political: 'political-lesson13-message11'
+    };
+    const DEFAULT_PETRA_SOURCE_IMAGES = [
+      { src: 'assets/IMG_2259.jpg', alt: 'Текст Петра, начало' },
+      { src: 'assets/IMG_2260.jpg', alt: 'Лексический комментарий' },
+      { src: 'assets/IMG_2261.PNG', alt: 'Страница 71' },
+      { src: 'assets/IMG_2262.PNG', alt: 'Страница 72' },
+      { src: 'assets/IMG_2263.PNG', alt: 'Страница 73' },
+      { src: 'assets/IMG_2264.PNG', alt: 'Страница 74' },
+      { src: 'assets/IMG_2265.jpg', alt: 'Фрагмент текста Петра' }
+    ];
     const PRACTICE_TEXTS = [
       {
         id: 'petra-original',
         title: 'Петра: основной текст',
         shortTitle: 'Петра',
+        group: 'petra',
+        sourceLabel: 'Страницы с текстом Петра',
+        sourceImages: DEFAULT_PETRA_SOURCE_IMAGES,
         sentences: PETRA_SENTENCES
       },
-      ...ADDITIONAL_TEXTS
+      ...ADDITIONAL_TEXTS.map((text) => ({
+        group: 'petra',
+        sourceLabel: 'Страницы с текстом',
+        sourceImages: DEFAULT_PETRA_SOURCE_IMAGES,
+        ...text
+      }))
     ];
 
     function normalizeArabic(value) {
@@ -1098,6 +1268,34 @@
 
     function isLongArabic(value) {
       return normalizeArabic(value).length > 18;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    const ARABIC_VOWELS = /[\u064B-\u065F\u0640\u0670\u06D6-\u06ED]/g;
+
+    function stripVowelsIfNeeded(text) {
+      return textState.hideVowels ? text.replace(ARABIC_VOWELS, '') : text;
+    }
+
+    function arabicSentenceHTML(sentence) {
+      if (!Array.isArray(sentence.words) || sentence.words.length === 0) {
+        return escapeHtml(stripVowelsIfNeeded(sentence.arabic));
+      }
+      return sentence.words
+        .map((word, idx) => {
+          const ar = escapeHtml(stripVowelsIfNeeded(word.ar));
+          const ru = escapeHtml(word.ru);
+          const sep = idx === 0 ? '' : ' ';
+          return `${sep}<span class="ar-word" data-tip="${ru}">${ar}</span>`;
+        })
+        .join('');
     }
 
     const els = {
@@ -1120,6 +1318,7 @@
       petraKicker: document.getElementById('petraKicker'),
       petraTitle: document.getElementById('petraTitle'),
       petraList: document.getElementById('petraList'),
+      petraSourceStrip: document.getElementById('petraSourceStrip'),
       textTabs: [...document.querySelectorAll('[data-text-id]')]
     };
 
@@ -1143,6 +1342,7 @@
       mode: 'learn',
       showArabic: true,
       showRussian: true,
+      hideVowels: localStorage.getItem('arabicQuizHideVowels') === 'true',
       recorder: null,
       stream: null,
       chunks: [],
@@ -1173,8 +1373,18 @@
       return WORDS[state.order[state.index] ?? 0];
     }
 
+    function isTextSection(section) {
+      return Object.hasOwn(DEFAULT_TEXT_BY_SECTION, section);
+    }
+
+    function currentTextGroup() {
+      return activeSection === 'political' ? 'political' : 'petra';
+    }
+
     function currentText() {
-      return PRACTICE_TEXTS.find((text) => text.id === textState.textId) ?? PRACTICE_TEXTS[0];
+      return PRACTICE_TEXTS.find((text) => text.id === textState.textId)
+        ?? PRACTICE_TEXTS.find((text) => text.id === DEFAULT_TEXT_BY_SECTION[currentTextGroup()])
+        ?? PRACTICE_TEXTS[0];
     }
 
     function currentSentences() {
@@ -1194,10 +1404,17 @@
       stopSprint();
       if (textState.recording) stopRecording();
       activeSection = section;
+      if (isTextSection(section) && currentText().group !== currentTextGroup()) {
+        textState.textId = DEFAULT_TEXT_BY_SECTION[section];
+        textState.index = 0;
+        textState.showArabic = textState.mode === 'learn';
+        textState.showRussian = true;
+        textState.message = 'Записи остаются только в этом браузере до обновления страницы.';
+      }
       els.sectionTabs.forEach((button) => button.classList.toggle('active', button.dataset.section === section));
       els.vocabSection.classList.toggle('hidden', section !== 'vocab');
-      els.petraSection.classList.toggle('hidden', section !== 'petra');
-      if (section === 'petra') renderPetra();
+      els.petraSection.classList.toggle('hidden', !isTextSection(section));
+      if (isTextSection(section)) renderPetra();
     }
 
     function updateStats() {
@@ -1460,12 +1677,23 @@
 
     function setPracticeText(textId) {
       if (textState.recording || textState.textId === textId) return;
+      const nextText = PRACTICE_TEXTS.find((text) => text.id === textId);
+      if (!nextText || nextText.group !== currentTextGroup()) return;
       textState.textId = textId;
       textState.index = 0;
       textState.showArabic = textState.mode === 'learn';
       textState.showRussian = true;
       textState.message = 'Записи остаются только в этом браузере до обновления страницы.';
       renderPetra();
+    }
+
+    function renderPetraSource(text) {
+      const images = text.sourceImages ?? DEFAULT_PETRA_SOURCE_IMAGES;
+      els.petraSourceStrip.className = `source-strip petra-source ${images.length === 1 ? 'single-source' : ''}`;
+      els.petraSourceStrip.setAttribute('aria-label', text.sourceLabel ?? 'Страницы с текстом');
+      els.petraSourceStrip.innerHTML = images.map((image) => `
+        <img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}">
+      `).join('');
     }
 
     function renderPetraList() {
@@ -1487,7 +1715,12 @@
       const recording = textState.recordings.get(recordingKey(sentence));
       const isTranslate = textState.mode === 'translate';
       const audioSource = recording ? `src="${recording.url}"` : '';
-      els.textTabs.forEach((button) => button.classList.toggle('active', button.dataset.textId === textState.textId));
+      const textGroup = currentTextGroup();
+      els.textTabs.forEach((button) => {
+        const inCurrentGroup = button.dataset.textGroup === textGroup;
+        button.classList.toggle('hidden', !inCurrentGroup);
+        button.classList.toggle('active', inCurrentGroup && button.dataset.textId === textState.textId);
+      });
       els.petraKicker.textContent = isTranslate ? `${text.shortTitle}: русский → арабский` : text.title;
       els.petraTitle.textContent = isTranslate
         ? 'Сначала переведи по памяти, потом открой арабский текст'
@@ -1498,27 +1731,34 @@
           <div class="sentence-tools">
             <button data-petra-action="toggle-arabic">${textState.showArabic ? 'Скрыть арабский' : 'Показать арабский'}</button>
             <button data-petra-action="toggle-russian">${textState.showRussian ? 'Скрыть перевод' : 'Показать перевод'}</button>
+            <button data-petra-action="toggle-vowels">${textState.hideVowels ? 'Показать огласовки' : 'Скрыть огласовки'}</button>
           </div>
           <div class="translation-box ${isTranslate || textState.showRussian ? '' : 'hidden'}">
             <span class="translation-label">${isTranslate ? 'Задание' : 'Перевод'}</span>
             <span>${sentence.russian}</span>
           </div>
-          <div class="arabic-sentence ${textState.showArabic ? '' : 'hidden'}">${sentence.arabic}</div>
+          <div class="arabic-sentence ${textState.showArabic ? '' : 'hidden'}">${arabicSentenceHTML(sentence)}</div>
           <p class="note">${isTranslate ? 'Произнеси арабский вариант по памяти. Потом открой текст и сравни.' : 'Прочитай несколько раз, скрой арабский текст и запиши себя без подсказки.'}</p>
         </div>
         <div class="recorder-panel">
           <div class="record-actions">
             <button class="primary" data-petra-action="record-start" ${textState.recording ? 'disabled' : ''}>Записать</button>
+            <button class="primary" data-petra-action="record-start-reading" ${textState.recording ? 'disabled' : ''} title="Запись с открытым арабским без огласовок — тренировка чтения">Записать чтение</button>
             <button class="danger" data-petra-action="record-stop" ${textState.recording ? '' : 'disabled'}>Стоп</button>
             <button class="secondary" data-petra-action="clear-recording" ${recording ? '' : 'disabled'}>Стереть запись</button>
           </div>
           <div class="record-status ${textState.recording ? 'recording' : ''}" id="recordStatus">
-            ${textState.recording ? 'Идёт запись. Произнеси предложение по памяти и нажми «Стоп».' : textState.message}
+            ${textState.recording
+              ? (textState.recordingMode === 'reading'
+                  ? 'Идёт запись чтения. Прочитай арабский без огласовок и нажми «Стоп».'
+                  : 'Идёт запись. Произнеси предложение по памяти и нажми «Стоп».')
+              : textState.message}
           </div>
           <audio id="recordingPlayback" controls ${audioSource} class="${recording ? '' : 'hidden'}"></audio>
         </div>
       `;
       renderPetraList();
+      renderPetraSource(text);
     }
 
     function nextSentence() {
@@ -1537,12 +1777,18 @@
       renderPetra();
     }
 
-    async function startRecording() {
+    async function startRecording(recordingMode = 'translate') {
       if (textState.recording) return;
       if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
         textState.message = 'Диктофон доступен только в современном браузере и на нормальном HTTPS.';
         renderPetra();
         return;
+      }
+
+      const isReading = recordingMode === 'reading';
+      if (isReading) {
+        textState.hideVowels = true;
+        localStorage.setItem('arabicQuizHideVowels', 'true');
       }
 
       try {
@@ -1552,10 +1798,13 @@
         textState.recorder = recorder;
         textState.chunks = [];
         textState.recording = true;
-        textState.showArabic = false;
+        textState.recordingMode = recordingMode;
+        textState.showArabic = isReading;
         textState.showRussian = true;
         textState.recordingSentenceId = recordingKey();
-        textState.message = 'Идёт запись.';
+        textState.message = isReading
+          ? 'Идёт запись чтения. Прочитай арабский без огласовок и нажми «Стоп».'
+          : 'Идёт запись.';
 
         recorder.addEventListener('dataavailable', (event) => {
           if (event.data.size > 0) textState.chunks.push(event.data);
@@ -1577,7 +1826,11 @@
           textState.showArabic = true;
           textState.showRussian = true;
           textState.recordingSentenceId = null;
-          textState.message = 'Запись готова. Нажми ▶ и сравни с арабским текстом.';
+          const wasReading = textState.recordingMode === 'reading';
+          textState.recordingMode = null;
+          textState.message = wasReading
+            ? 'Запись чтения готова. Нажми ▶ и при желании покажи огласовки для сверки.'
+            : 'Запись готова. Нажми ▶ и сравни с арабским текстом.';
           renderPetra();
         });
 
@@ -1652,7 +1905,13 @@
         textState.showRussian = !textState.showRussian;
         renderPetra();
       }
-      if (petraAction === 'record-start') startRecording();
+      if (petraAction === 'toggle-vowels') {
+        textState.hideVowels = !textState.hideVowels;
+        localStorage.setItem('arabicQuizHideVowels', String(textState.hideVowels));
+        renderPetra();
+      }
+      if (petraAction === 'record-start') startRecording('translate');
+      if (petraAction === 'record-start-reading') startRecording('reading');
       if (petraAction === 'record-stop') stopRecording();
       if (petraAction === 'clear-recording') clearCurrentRecording();
 
@@ -1677,7 +1936,7 @@
     });
 
     document.addEventListener('keydown', (event) => {
-      if (activeSection === 'petra') {
+      if (isTextSection(activeSection)) {
         if (event.key === 'ArrowRight') nextSentence();
         if (event.key === 'ArrowLeft') previousSentence();
         if (event.key === ' ') {
@@ -1700,6 +1959,56 @@
     });
 
     els.search.addEventListener('input', renderList);
+
+    const wordPopover = document.getElementById('word-popover');
+    let activeWord = null;
+
+    function hideWordPopover() {
+      if (activeWord) activeWord.classList.remove('active');
+      activeWord = null;
+      wordPopover.hidden = true;
+    }
+
+    function showWordPopover(word) {
+      if (activeWord && activeWord !== word) activeWord.classList.remove('active');
+      activeWord = word;
+      word.classList.add('active');
+      wordPopover.textContent = word.dataset.tip || '';
+      wordPopover.hidden = false;
+      wordPopover.style.left = '0px';
+      wordPopover.style.top = '0px';
+      const wordRect = word.getBoundingClientRect();
+      const popRect = wordPopover.getBoundingClientRect();
+      const margin = 8;
+      let pageX = wordRect.left + wordRect.width / 2 - popRect.width / 2 + window.scrollX;
+      const pageY = wordRect.top - popRect.height - 10 + window.scrollY;
+      const maxLeft = window.scrollX + document.documentElement.clientWidth - popRect.width - margin;
+      pageX = Math.max(window.scrollX + margin, Math.min(pageX, maxLeft));
+      wordPopover.style.left = pageX + 'px';
+      wordPopover.style.top = pageY + 'px';
+    }
+
+    document.addEventListener('click', (event) => {
+      const word = event.target.closest('.ar-word');
+      if (word) {
+        event.stopPropagation();
+        if (activeWord === word) {
+          hideWordPopover();
+        } else {
+          showWordPopover(word);
+        }
+        return;
+      }
+      hideWordPopover();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') hideWordPopover();
+    });
+
+    window.addEventListener('scroll', hideWordPopover, { passive: true });
+    window.addEventListener('resize', hideWordPopover);
+
     render();
   </script>
 </body>
