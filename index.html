@@ -140,7 +140,7 @@
 
     .main-menu {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
       margin-bottom: 12px;
     }
@@ -660,6 +660,34 @@
       width: 100%;
     }
 
+    .verbs-layout {
+      display: grid;
+    }
+
+    .verbs-practice {
+      min-height: auto;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .verbs-recorder {
+      box-shadow: none;
+    }
+
+    .verb-audio-loop-active {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: #0d5139;
+    }
+
+    .verb-table-frame {
+      width: 100%;
+      height: min(78vh, 860px);
+      min-height: 620px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
     .sentence-list {
       display: grid;
       gap: 6px;
@@ -815,6 +843,10 @@
         Тексты (полит арабский)
         <span>Урок 13: паузальное чтение</span>
       </button>
+      <button class="section-tab" data-section="verbs">
+        Таблица глаголов
+        <span>Породы, формы и запись для повтора</span>
+      </button>
     </nav>
 
     <section class="app-section" id="vocabSection">
@@ -892,6 +924,7 @@
         <button class="text-tab" data-text-group="petra" data-text-id="2026-05-11-khan-azhar-eid">11.05 — Курбан-байрам</button>
         <button class="text-tab" data-text-group="petra" data-text-id="2026-05-16-khan-taxi-walk">16.05 — Хан аль-Халили</button>
         <button class="text-tab" data-text-group="petra" data-text-id="2026-05-16-dubai-1">дубай 1</button>
+        <button class="text-tab" data-text-group="petra" data-text-id="2026-05-17-dubai-2">Дубай 2</button>
         <button class="text-tab hidden" data-text-group="political" data-text-id="political-lesson13-message11">Урок 13 — сообщение № 11</button>
       </div>
 
@@ -932,6 +965,35 @@
             </div>
           </div>
         </aside>
+      </main>
+    </section>
+
+    <section class="app-section hidden" id="verbsSection">
+      <main class="verbs-layout">
+        <section class="practice verbs-practice" aria-live="polite">
+          <div class="practice-head">
+            <div>
+              <p class="eyebrow">Неправильные глаголы</p>
+              <h2 class="mode-title">Таблица пород и форм</h2>
+            </div>
+          </div>
+
+          <div class="recorder-panel verbs-recorder">
+            <div class="record-actions">
+              <button class="primary" data-verb-audio-action="record-start">Записать</button>
+              <button class="danger" data-verb-audio-action="record-stop" disabled>Стоп</button>
+              <button class="secondary" data-verb-audio-action="play" disabled>Воспроизвести</button>
+              <button class="secondary" data-verb-audio-action="toggle-loop">Повторять бесконечно</button>
+              <button class="tool-button warn" data-verb-audio-action="clear-recording" disabled>Стереть запись</button>
+            </div>
+            <div class="record-status" id="verbAudioStatus">
+              Запись сохранится в этом браузере после закрытия сайта.
+            </div>
+            <audio id="verbAudioPlayback" controls class="hidden"></audio>
+          </div>
+
+          <iframe class="verb-table-frame" src="verbs-table.html" title="Таблица неправильных арабских глаголов"></iframe>
+        </section>
       </main>
     </section>
   </div>
@@ -1206,10 +1268,10 @@
     "sourceImages": [],
     "sentences": [
       {"id": 1, "russian": "Мы вышли из гостиницы, чтобы взять такси, и очень быстро остановили его.", "arabic": "خَرَجْنَا مِنَ الْفُنْدُقِ لِنَأْخُذَ سَيَّارَةَ تَاكْسِي، فَأَوْقَفْنَاهَا بِسُرْعَةٍ هَائِلَةٍ.", "words": [{"ar":"خَرَجْنَا","ru":"мы вышли"},{"ar":"مِنَ الْفُنْدُقِ","ru":"из гостиницы"},{"ar":"لِنَأْخُذَ","ru":"чтобы взять"},{"ar":"سَيَّارَةَ تَاكْسِي،","ru":"такси"},{"ar":"فَأَوْقَفْنَاهَا","ru":"и остановили его"},{"ar":"بِسُرْعَةٍ هَائِلَةٍ.","ru":"очень быстро"}]},
-      {"id": 2, "russian": "И перед тем как сесть в машину, мы спросили водителя, может ли он довезти нас до района Хан аль-Халили.", "arabic": "وَقَبْلَ رُكُوبِ السَّيَّارَةِ سَأَلْنَا السَّائِقَ إِذَا كَانَ بِإِمْكَانِهِ أَنْ يُوصِلَنَا إِلَى مَنْطِقَةِ خَانِ الْخَلِيلِي.", "words": [{"ar":"وَقَبْلَ","ru":"и перед"},{"ar":"رُكُوبِ السَّيَّارَةِ","ru":"посадкой в машину"},{"ar":"سَأَلْنَا","ru":"мы спросили"},{"ar":"السَّائِقَ","ru":"водителя"},{"ar":"إِذَا كَانَ","ru":"если он был / может ли он"},{"ar":"بِإِمْكَانِهِ","ru":"в его возможности"},{"ar":"أَنْ يُوصِلَنَا","ru":"довезти нас"},{"ar":"إِلَى مَنْطِقَةِ","ru":"до района"},{"ar":"خَانِ الْخَلِيلِي.","ru":"Хан аль-Халили"}]},
+      {"id": 2, "russian": "И перед тем как сесть в машину, мы спросили водителя, может ли он довезти нас до района Хан аль-Халили.", "arabic": "وَقَبْلَ رُكُوبِ السَّيَّارَةِ سَأَلْنَا السَّائِقَ إِذَا كَانَ بِإِمْكَانِهِ أَنْ يُوصِلَنَا إِلَى مِنْطَقَةِ خَانِ الْخَلِيلِي.", "words": [{"ar":"وَقَبْلَ","ru":"и перед"},{"ar":"رُكُوبِ السَّيَّارَةِ","ru":"посадкой в машину"},{"ar":"سَأَلْنَا","ru":"мы спросили"},{"ar":"السَّائِقَ","ru":"водителя"},{"ar":"إِذَا كَانَ","ru":"если он был / может ли он"},{"ar":"بِإِمْكَانِهِ","ru":"в его возможности"},{"ar":"أَنْ يُوصِلَنَا","ru":"довезти нас"},{"ar":"إِلَى مِنْطَقَةِ","ru":"до района"},{"ar":"خَانِ الْخَلِيلِي.","ru":"Хан аль-Халили"}]},
       {"id": 3, "russian": "И он согласился довезти нас туда.", "arabic": "فَوَافَقَ عَلَى إِيصَالِنَا إِلَيْهَا.", "words": [{"ar":"فَوَافَقَ","ru":"и он согласился"},{"ar":"عَلَى إِيصَالِنَا","ru":"довезти нас"},{"ar":"إِلَيْهَا.","ru":"туда"}]},
       {"id": 4, "russian": "Дорога до Хан аль-Халили не заняла много времени, и через четверть часа водитель доставил нас в нужное место.", "arabic": "لَمْ يَأْخُذِ الطَّرِيقُ إِلَى خَانِ الْخَلِيلِي وَقْتًا طَوِيلًا، وَبَعْدَ رُبْعِ سَاعَةٍ أَوْصَلَنَا السَّائِقُ إِلَى الْمَكَانِ الْمَطْلُوبِ.", "words": [{"ar":"لَمْ يَأْخُذِ","ru":"не заняла"},{"ar":"الطَّرِيقُ","ru":"дорога"},{"ar":"إِلَى خَانِ الْخَلِيلِي","ru":"до Хан аль-Халили"},{"ar":"وَقْتًا طَوِيلًا،","ru":"много времени"},{"ar":"وَبَعْدَ رُبْعِ سَاعَةٍ","ru":"и через четверть часа"},{"ar":"أَوْصَلَنَا","ru":"доставил нас"},{"ar":"السَّائِقُ","ru":"водитель"},{"ar":"إِلَى الْمَكَانِ الْمَطْلُوبِ.","ru":"в нужное место"}]},
-      {"id": 5, "russian": "Мы начали прогулку и сразу же нашли в этом месте особую и приятную атмосферу, особенно во время прогулки по историческому району, куда стекается большое количество туристов, чтобы насладиться его атмосферой.", "arabic": "بَدَأْنَا الْجَوْلَةَ، وَفِي الْحَالِ وَجَدْنَا فِي هَذَا الْمَكَانِ طَابِعًا خَاصًّا وَمُمْتِعًا، لَا سِيَّمَا فِي التَّجَوُّلِ دَاخِلَ الْمَنْطِقَةِ الْأَثَرِيَّةِ الَّتِي يَتَوَافَدُ عَلَيْهَا عَدَدٌ كَبِيرٌ مِنَ السُّيَّاحِ لِلِاسْتِمْتَاعِ بِأَجْوَائِهَا.", "words": [{"ar":"بَدَأْنَا الْجَوْلَةَ،","ru":"мы начали прогулку"},{"ar":"وَفِي الْحَالِ","ru":"и сразу же"},{"ar":"وَجَدْنَا","ru":"мы нашли"},{"ar":"فِي هَذَا الْمَكَانِ","ru":"в этом месте"},{"ar":"طَابِعًا خَاصًّا","ru":"особый характер / атмосферу"},{"ar":"وَمُمْتِعًا،","ru":"и приятный"},{"ar":"لَا سِيَّمَا","ru":"особенно"},{"ar":"فِي التَّجَوُّلِ","ru":"во время прогулки"},{"ar":"دَاخِلَ الْمَنْطِقَةِ الْأَثَرِيَّةِ","ru":"внутри исторического района"},{"ar":"الَّتِي يَتَوَافَدُ عَلَيْهَا","ru":"куда стекается"},{"ar":"عَدَدٌ كَبِيرٌ","ru":"большое количество"},{"ar":"مِنَ السُّيَّاحِ","ru":"туристов"},{"ar":"لِلِاسْتِمْتَاعِ","ru":"чтобы насладиться"},{"ar":"بِأَجْوَائِهَا.","ru":"его атмосферой"}]},
+      {"id": 5, "russian": "Мы начали прогулку и сразу же нашли в этом месте особую и приятную атмосферу, особенно во время прогулки по историческому району, куда стекается большое количество туристов, чтобы насладиться его атмосферой.", "arabic": "بَدَأْنَا الْجَوْلَةَ، وَفِي الْحَالِ وَجَدْنَا فِي هَذَا الْمَكَانِ طَابِعًا خَاصًّا وَمُمْتِعًا، لَا سِيَّمَا فِي التَّجَوُّلِ دَاخِلَ الْمِنْطَقَةِ الْأَثَرِيَّةِ الَّتِي يَتَوَافَدُ عَلَيْهَا عَدَدٌ كَبِيرٌ مِنَ السُّيَّاحِ لِلِاسْتِمْتَاعِ بِأَجْوَائِهَا.", "words": [{"ar":"بَدَأْنَا الْجَوْلَةَ،","ru":"мы начали прогулку"},{"ar":"وَفِي الْحَالِ","ru":"и сразу же"},{"ar":"وَجَدْنَا","ru":"мы нашли"},{"ar":"فِي هَذَا الْمَكَانِ","ru":"в этом месте"},{"ar":"طَابِعًا خَاصًّا","ru":"особый характер / атмосферу"},{"ar":"وَمُمْتِعًا،","ru":"и приятный"},{"ar":"لَا سِيَّمَا","ru":"особенно"},{"ar":"فِي التَّجَوُّلِ","ru":"во время прогулки"},{"ar":"دَاخِلَ الْمِنْطَقَةِ الْأَثَرِيَّةِ","ru":"внутри исторического района"},{"ar":"الَّتِي يَتَوَافَدُ عَلَيْهَا","ru":"куда стекается"},{"ar":"عَدَدٌ كَبِيرٌ","ru":"большое количество"},{"ar":"مِنَ السُّيَّاحِ","ru":"туристов"},{"ar":"لِلِاسْتِمْتَاعِ","ru":"чтобы насладиться"},{"ar":"بِأَجْوَائِهَا.","ru":"его атмосферой"}]},
       {"id": 6, "russian": "Они предпочитают рассматривать египетские антикварные изделия, кожаные изделия, золотые, серебряные и медные украшения, а также концентрированные восточные духи.", "arabic": "إِنَّهُمْ يُفَضِّلُونَ مُشَاهَدَةَ الْمُنْتَجَاتِ الْمِصْرِيَّةِ الْأَثَرِيَّةِ وَالْمَصْنُوعَاتِ الْجِلْدِيَّةِ وَالْمَشْغُولَاتِ الذَّهَبِيَّةِ وَالْفِضِّيَّةِ وَالنُّحَاسِيَّةِ وَالْعُطُورِ الشَّرْقِيَّةِ الْمُرَكَّزَةِ.", "words": [{"ar":"إِنَّهُمْ","ru":"они"},{"ar":"يُفَضِّلُونَ","ru":"предпочитают"},{"ar":"مُشَاهَدَةَ","ru":"рассматривать"},{"ar":"الْمُنْتَجَاتِ الْمِصْرِيَّةِ الْأَثَرِيَّةِ","ru":"египетские антикварные изделия"},{"ar":"وَالْمَصْنُوعَاتِ الْجِلْدِيَّةِ","ru":"и кожаные изделия"},{"ar":"وَالْمَشْغُولَاتِ الذَّهَبِيَّةِ","ru":"и золотые украшения"},{"ar":"وَالْفِضِّيَّةِ","ru":"и серебряные"},{"ar":"وَالنُّحَاسِيَّةِ","ru":"и медные"},{"ar":"وَالْعُطُورِ الشَّرْقِيَّةِ","ru":"и восточные духи"},{"ar":"الْمُرَكَّزَةِ.","ru":"концентрированные"}]},
       {"id": 7, "russian": "А также сидеть в народных кафе, чтобы пить чай с мятой, чай «кяшари» и другие напитки, которыми славятся египтяне.", "arabic": "وَالْجُلُوسَ فِي الْمَقَاهِي الشَّعْبِيَّةِ لِشُرْبِ الشَّايِ بِالنَّعْنَاعِ وَالشَّايِ الْكَشَرِيِّ وَغَيْرِهِمَا مِنَ الْمَشْرُوبَاتِ الَّتِي يَشْتَهِرُ بِهَا الْمِصْرِيُّونَ.", "words": [{"ar":"وَالْجُلُوسَ","ru":"а также сидеть"},{"ar":"فِي الْمَقَاهِي الشَّعْبِيَّةِ","ru":"в народных кафе"},{"ar":"لِشُرْبِ","ru":"чтобы пить"},{"ar":"الشَّايِ بِالنَّعْنَاعِ","ru":"чай с мятой"},{"ar":"وَالشَّايِ الْكَشَرِيِّ","ru":"и чай кяшари"},{"ar":"وَغَيْرِهِمَا","ru":"и другие кроме них"},{"ar":"مِنَ الْمَشْرُوبَاتِ","ru":"из напитков"},{"ar":"الَّتِي يَشْتَهِرُ بِهَا","ru":"которыми славятся"},{"ar":"الْمِصْرِيُّونَ.","ru":"египтяне"}]}
     ]
@@ -1236,6 +1298,27 @@
       {"id": 13, "russian": "Квартиру напротив он сдал в аренду шестнадцати азиатским рабочим, а соседнюю квартиру сделал офисом служб занятости.", "arabic": "أَجَّرَ الشَّقَّةَ المُوَاجِهَةَ إِلَى سِتَّةَ عَشَرَ عَامِلًا آسْيَوِيًّا، وَالشَّقَّةَ المُجَاوِرَةَ جَعَلَهَا مَكْتَبًا لِخِدْمَاتِ العَمَالَةِ.", "words": [{"ar":"أَجَّرَ الشَّقَّةَ المُوَاجِهَةَ","ru":"сдал квартиру напротив"},{"ar":"إِلَى سِتَّةَ عَشَرَ عَامِلًا آسْيَوِيًّا،","ru":"шестнадцати азиатским рабочим"},{"ar":"وَالشَّقَّةَ المُجَاوِرَةَ","ru":"а соседнюю квартиру"},{"ar":"جَعَلَهَا","ru":"сделал её"},{"ar":"مَكْتَبًا","ru":"офисом"},{"ar":"لِخِدْمَاتِ العَمَالَةِ.","ru":"служб занятости"}]},
       {"id": 14, "russian": "Я беспокоюсь за девочек, к тому же за последние два года мы ничего не накопили.", "arabic": "أَقْلَقُ عَلَى البَنَاتِ، كَمَا أَنَّنَا لَمْ نَدَّخِرْ شَيْئًا فِي السَّنَتَيْنِ الأَخِيرَتَيْنِ.", "words": [{"ar":"أَقْلَقُ","ru":"я беспокоюсь"},{"ar":"عَلَى البَنَاتِ،","ru":"за девочек"},{"ar":"كَمَا أَنَّنَا","ru":"к тому же мы"},{"ar":"لَمْ نَدَّخِرْ شَيْئًا","ru":"ничего не накопили"},{"ar":"فِي السَّنَتَيْنِ الأَخِيرَتَيْنِ.","ru":"за последние два года"}]},
       {"id": 15, "russian": "И если бы он был способен откладывать хотя бы маленькую часть своей зарплаты, его семья бы не распалась.", "arabic": "وَلَوْ كَانَ قَادِرًا عَلَى الادِّخَارِ حَتَّى وَلَوْ لِجُزْءٍ صَغِيرٍ مِنْ رَاتِبِهِ، لَمَا تَفَكَّكَتْ عَائِلَتُهُ.", "words": [{"ar":"وَلَوْ كَانَ قَادِرًا","ru":"и если бы он был способен"},{"ar":"عَلَى الادِّخَارِ","ru":"откладывать"},{"ar":"حَتَّى وَلَوْ","ru":"хотя бы"},{"ar":"لِجُزْءٍ صَغِيرٍ مِنْ رَاتِبِهِ،","ru":"маленькую часть своей зарплаты"},{"ar":"لَمَا تَفَكَّكَتْ عَائِلَتُهُ.","ru":"его семья бы не распалась"}]}
+    ]
+  },
+  {
+    "id": "2026-05-17-dubai-2",
+    "title": "Дубай 2",
+    "shortTitle": "Дубай 2",
+    "sourceLabel": "Текст для тренировки",
+    "sourceImages": [],
+    "sentences": [
+      {"id": 1, "russian": "Треть их зарплаты уходит в карман сборщика арендной платы первого числа каждого месяца.", "arabic": "ثُلُثُ رَاتِبِهِمْ يَذْهَبُ إِلَى جَيْبِ مُحَصِّلِ الإِيجَارَاتِ أَوَّلَ كُلِّ شَهْرٍ.", "words": [{"ar":"ثُلُثُ","ru":"треть"},{"ar":"رَاتِبِهِمْ","ru":"их зарплаты"},{"ar":"يَذْهَبُ","ru":"уходит"},{"ar":"إِلَى جَيْبِ","ru":"в карман"},{"ar":"مُحَصِّلِ الإِيجَارَاتِ","ru":"сборщика арендной платы"},{"ar":"أَوَّلَ","ru":"в начале / первого числа"},{"ar":"كُلِّ شَهْرٍ.","ru":"каждого месяца"}]},
+      {"id": 2, "russian": "Другую треть поглощают ежедневные расходы на жизнь: бензин и рестораны.", "arabic": "الثُّلُثُ الآخَرُ تَبْتَلِعُهُ التَّكَالِيفُ اليَوْمِيَّةُ لِلْمَعِيشَةِ: البِنْزِينُ وَالمَطَاعِمُ.", "words": [{"ar":"الثُّلُثُ الآخَرُ","ru":"другая треть"},{"ar":"تَبْتَلِعُهُ","ru":"поглощает его"},{"ar":"التَّكَالِيفُ اليَوْمِيَّةُ","ru":"ежедневные расходы"},{"ar":"لِلْمَعِيشَةِ:","ru":"на жизнь:"},{"ar":"البِنْزِينُ","ru":"бензин"},{"ar":"وَالمَطَاعِمُ.","ru":"и рестораны"}]},
+      {"id": 3, "russian": "Абдельазиз решил сэкономить стоимость одной еды из трёх приёмов пищи, которые он ежедневно ест в ресторане, где находится место его работы в торговой компании.", "arabic": "قَرَّرَ عَبْدُ العَزِيزِ تَوْفِيرَ ثَمَنِ وَجْبَةٍ مِنْ ثَلَاثِ وَجَبَاتٍ يَتَنَاوَلُهَا يَوْمِيًّا فِي المَطْعَمِ، حَيْثُ مَكَانُ عَمَلِهِ فِي شَرِكَةِ التَّسْوِيقِ.", "words": [{"ar":"قَرَّرَ","ru":"решил"},{"ar":"عَبْدُ العَزِيزِ","ru":"Абдельазиз"},{"ar":"تَوْفِيرَ","ru":"сэкономить"},{"ar":"ثَمَنِ وَجْبَةٍ","ru":"стоимость одного приёма пищи"},{"ar":"مِنْ ثَلَاثِ وَجَبَاتٍ","ru":"из трёх приёмов пищи"},{"ar":"يَتَنَاوَلُهَا","ru":"которые он ест"},{"ar":"يَوْمِيًّا","ru":"ежедневно"},{"ar":"فِي المَطْعَمِ،","ru":"в ресторане"},{"ar":"حَيْثُ","ru":"где"},{"ar":"مَكَانُ عَمَلِهِ","ru":"место его работы"},{"ar":"فِي شَرِكَةِ التَّسْوِيقِ.","ru":"в торговой компании"}]},
+      {"id": 4, "russian": "Он заходит в государственный кооперативный магазин, где «курица дешевле и чище», возвращается домой и растерянно стоит перед солью, уксусом, кислым лимоном и семью пряностями.", "arabic": "يَمُرُّ بِالتَّعَاوُنِيَّةِ الحُكُومِيَّةِ، حَيْثُ «الدَّجَاجُ أَرْخَصُ وَأَنْظَفُ»، يَرْجِعُ إِلَى البَيْتِ وَيَقِفُ حَائِرًا أَمَامَ المِلْحِ وَالخَلِّ وَاللَّيْمُونِ الحَامِضِ وَالبَهَارَاتِ السَّبْعَةِ.", "words": [{"ar":"يَمُرُّ","ru":"заходит / проходит"},{"ar":"بِالتَّعَاوُنِيَّةِ الحُكُومِيَّةِ،","ru":"в государственный кооператив"},{"ar":"حَيْثُ","ru":"где"},{"ar":"«الدَّجَاجُ","ru":"курица"},{"ar":"أَرْخَصُ","ru":"дешевле"},{"ar":"وَأَنْظَفُ»،","ru":"и чище"},{"ar":"يَرْجِعُ","ru":"возвращается"},{"ar":"إِلَى البَيْتِ","ru":"домой"},{"ar":"وَيَقِفُ","ru":"и стоит"},{"ar":"حَائِرًا","ru":"растерянно"},{"ar":"أَمَامَ","ru":"перед"},{"ar":"المِلْحِ","ru":"солью"},{"ar":"وَالخَلِّ","ru":"и уксусом"},{"ar":"وَاللَّيْمُونِ الحَامِضِ","ru":"и кислым лимоном"},{"ar":"وَالبَهَارَاتِ السَّبْعَةِ.","ru":"и семью пряностями"}]},
+      {"id": 5, "russian": "Что ему делать?", "arabic": "مَاذَا يَفْعَلُ؟", "words": [{"ar":"مَاذَا","ru":"что"},{"ar":"يَفْعَلُ؟","ru":"ему делать?"}]},
+      {"id": 6, "russian": "Он уже решил сэкономить стоимость одной еды в ресторане, но он не способен приготовить её дома.", "arabic": "لَقَدْ قَرَّرَ تَوْفِيرَ ثَمَنِ وَجْبَةٍ فِي المَطْعَمِ، لَكِنَّهُ غَيْرُ قَادِرٍ عَلَى إِعْدَادِهَا فِي البَيْتِ.", "words": [{"ar":"لَقَدْ","ru":"уже / ведь"},{"ar":"قَرَّرَ","ru":"решил"},{"ar":"تَوْفِيرَ","ru":"сэкономить"},{"ar":"ثَمَنِ وَجْبَةٍ","ru":"стоимость одного приёма пищи"},{"ar":"فِي المَطْعَمِ،","ru":"в ресторане"},{"ar":"لَكِنَّهُ","ru":"но он"},{"ar":"غَيْرُ قَادِرٍ","ru":"не способен"},{"ar":"عَلَى إِعْدَادِهَا","ru":"приготовить её"},{"ar":"فِي البَيْتِ.","ru":"дома"}]},
+      {"id": 7, "russian": "Город сходит с ума.", "arabic": "المَدِينَةُ تُجَنُّ.", "words": [{"ar":"المَدِينَةُ","ru":"город"},{"ar":"تُجَنُّ.","ru":"сходит с ума"}]},
+      {"id": 8, "russian": "Всё в нём становится дороже с рекордной скоростью.", "arabic": "كُلُّ شَيْءٍ فِيهَا يُصْبِحُ أَغْلَى بِسُرْعَةٍ قِيَاسِيَّةٍ.", "words": [{"ar":"كُلُّ شَيْءٍ","ru":"всё"},{"ar":"فِيهَا","ru":"в нём / в ней"},{"ar":"يُصْبِحُ","ru":"становится"},{"ar":"أَغْلَى","ru":"дороже"},{"ar":"بِسُرْعَةٍ قِيَاسِيَّةٍ.","ru":"с рекордной скоростью"}]},
+      {"id": 9, "russian": "Два дня назад он сопровождал своих товарищей на обед.", "arabic": "قَبْلَ يَوْمَيْنِ صَاحَبَ رِفَاقَهُ إِلَى الغَدَاءِ.", "words": [{"ar":"قَبْلَ يَوْمَيْنِ","ru":"два дня назад"},{"ar":"صَاحَبَ","ru":"сопровождал"},{"ar":"رِفَاقَهُ","ru":"своих товарищей"},{"ar":"إِلَى الغَدَاءِ.","ru":"на обед"}]},
+      {"id": 10, "russian": "Он робко предложил им поесть в чистом пакистанском ресторане, где подают свежий гамбургер с жареным яйцом и томатным соусом.", "arabic": "اِقْتَرَحَ عَلَيْهِمْ بِخَجَلٍ أَنْ يَأْكُلُوا فِي مَطْعَمٍ بَاكِسْتَانِيٍّ نَظِيفٍ وَيُقَدِّمُ هَامْبُرْغَرًا طَازِجًا مَعَ بَيْضٍ مَقْلِيٍّ وَصَلْصَةِ الطَّمَاطِمِ.", "words": [{"ar":"اِقْتَرَحَ","ru":"предложил"},{"ar":"عَلَيْهِمْ","ru":"им"},{"ar":"بِخَجَلٍ","ru":"робко / со стеснением"},{"ar":"أَنْ يَأْكُلُوا","ru":"чтобы они поели"},{"ar":"فِي مَطْعَمٍ بَاكِسْتَانِيٍّ","ru":"в пакистанском ресторане"},{"ar":"نَظِيفٍ","ru":"чистом"},{"ar":"وَيُقَدِّمُ","ru":"и подаёт"},{"ar":"هَامْبُرْغَرًا طَازِجًا","ru":"свежий гамбургер"},{"ar":"مَعَ بَيْضٍ مَقْلِيٍّ","ru":"с жареным яйцом"},{"ar":"وَصَلْصَةِ الطَّمَاطِمِ.","ru":"и томатным соусом"}]},
+      {"id": 11, "russian": "Они посмотрели на него с презрением и вошли в ливанский ресторан.", "arabic": "نَظَرُوا إِلَيْهِ بِازْدِرَاءٍ، فَدَخَلُوا المَطْعَمَ اللُّبْنَانِيَّ.", "words": [{"ar":"نَظَرُوا","ru":"они посмотрели"},{"ar":"إِلَيْهِ","ru":"на него"},{"ar":"بِازْدِرَاءٍ،","ru":"с презрением"},{"ar":"فَدَخَلُوا","ru":"и вошли"},{"ar":"المَطْعَمَ اللُّبْنَانِيَّ.","ru":"в ливанский ресторан"}]},
+      {"id": 12, "russian": "Не один только Абдельазиз не может откладывать деньги в Дубае, куда люди направляются со всех сторон ради работы.", "arabic": "لَيْسَ عَبْدُ العَزِيزِ وَحْدَهُ الَّذِي لَا يَقْدِرُ عَلَى الادِّخَارِ فِي دُبَيَّ الَّتِي يَقْصِدُهَا النَّاسُ مِنْ كُلِّ حَدَبٍ وَصَوْبٍ لِلْعَمَلِ.", "words": [{"ar":"لَيْسَ","ru":"не является / не"},{"ar":"عَبْدُ العَزِيزِ","ru":"Абдельазиз"},{"ar":"وَحْدَهُ","ru":"один / один только"},{"ar":"الَّذِي","ru":"который"},{"ar":"لَا يَقْدِرُ","ru":"не может"},{"ar":"عَلَى الادِّخَارِ","ru":"откладывать деньги"},{"ar":"فِي دُبَيَّ","ru":"в Дубае"},{"ar":"الَّتِي","ru":"куда / которая"},{"ar":"يَقْصِدُهَا النَّاسُ","ru":"люди направляются"},{"ar":"مِنْ كُلِّ حَدَبٍ وَصَوْبٍ","ru":"со всех сторон"},{"ar":"لِلْعَمَلِ.","ru":"ради работы"}]}
     ]
   },
   {
@@ -1295,6 +1378,10 @@
         ...text
       }))
     ];
+    const VERB_AUDIO_DB = 'arabicVerbTableAudioDb';
+    const VERB_AUDIO_STORE = 'recordings';
+    const VERB_AUDIO_KEY = 'main';
+    const VERB_AUDIO_LOOP_KEY = 'arabicVerbTableAudioLoop';
 
     function normalizeArabic(value) {
       return value
@@ -1371,6 +1458,9 @@
       sectionTabs: [...document.querySelectorAll('.section-tab')],
       vocabSection: document.getElementById('vocabSection'),
       petraSection: document.getElementById('petraSection'),
+      verbsSection: document.getElementById('verbsSection'),
+      verbAudioStatus: document.getElementById('verbAudioStatus'),
+      verbAudioPlayback: document.getElementById('verbAudioPlayback'),
       petraModes: [...document.querySelectorAll('.petra-mode')],
       petraStage: document.getElementById('petraStage'),
       petraProgress: document.getElementById('petraProgressText'),
@@ -1409,6 +1499,17 @@
       recordingSentenceId: null,
       recordings: new Map(),
       message: 'Записи остаются только в этом браузере до обновления страницы.'
+    };
+
+    const verbAudioState = {
+      recorder: null,
+      stream: null,
+      chunks: [],
+      recording: false,
+      blob: null,
+      url: null,
+      loop: localStorage.getItem(VERB_AUDIO_LOOP_KEY) === 'true',
+      message: 'Запись сохранится в этом браузере после закрытия сайта.'
     };
 
     let activeSection = 'vocab';
@@ -1462,6 +1563,7 @@
     function setSection(section) {
       stopSprint();
       if (textState.recording) stopRecording();
+      if (verbAudioState.recording) stopVerbAudioRecording();
       activeSection = section;
       if (isTextSection(section) && currentText().group !== currentTextGroup()) {
         textState.textId = DEFAULT_TEXT_BY_SECTION[section];
@@ -1473,7 +1575,9 @@
       els.sectionTabs.forEach((button) => button.classList.toggle('active', button.dataset.section === section));
       els.vocabSection.classList.toggle('hidden', section !== 'vocab');
       els.petraSection.classList.toggle('hidden', !isTextSection(section));
+      els.verbsSection.classList.toggle('hidden', section !== 'verbs');
       if (isTextSection(section)) renderPetra();
+      if (section === 'verbs') renderVerbAudio();
     }
 
     function updateStats() {
@@ -1842,6 +1946,242 @@
       renderPetra();
     }
 
+    function openVerbAudioDb() {
+      return new Promise((resolve, reject) => {
+        if (!window.indexedDB) {
+          reject(new Error('IndexedDB is not available'));
+          return;
+        }
+
+        const request = window.indexedDB.open(VERB_AUDIO_DB, 1);
+        request.addEventListener('upgradeneeded', () => {
+          const db = request.result;
+          if (!db.objectStoreNames.contains(VERB_AUDIO_STORE)) {
+            db.createObjectStore(VERB_AUDIO_STORE, { keyPath: 'id' });
+          }
+        });
+        request.addEventListener('success', () => resolve(request.result));
+        request.addEventListener('error', () => reject(request.error ?? new Error('Audio storage failed')));
+      });
+    }
+
+    async function saveVerbRecording(blob) {
+      const db = await openVerbAudioDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(VERB_AUDIO_STORE, 'readwrite');
+        transaction.objectStore(VERB_AUDIO_STORE).put({
+          id: VERB_AUDIO_KEY,
+          blob,
+          type: blob.type,
+          updatedAt: Date.now()
+        });
+        transaction.addEventListener('complete', () => {
+          db.close();
+          resolve();
+        });
+        transaction.addEventListener('abort', () => {
+          db.close();
+          reject(transaction.error ?? new Error('Audio save failed'));
+        });
+        transaction.addEventListener('error', () => {
+          db.close();
+          reject(transaction.error ?? new Error('Audio save failed'));
+        });
+      });
+    }
+
+    async function loadVerbRecording() {
+      const db = await openVerbAudioDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(VERB_AUDIO_STORE, 'readonly');
+        const request = transaction.objectStore(VERB_AUDIO_STORE).get(VERB_AUDIO_KEY);
+        transaction.addEventListener('complete', () => {
+          db.close();
+          resolve(request.result?.blob ?? null);
+        });
+        transaction.addEventListener('abort', () => {
+          db.close();
+          reject(transaction.error ?? new Error('Audio load failed'));
+        });
+        transaction.addEventListener('error', () => {
+          db.close();
+          reject(transaction.error ?? new Error('Audio load failed'));
+        });
+      });
+    }
+
+    async function deleteVerbRecording() {
+      const db = await openVerbAudioDb();
+      return new Promise((resolve, reject) => {
+        const transaction = db.transaction(VERB_AUDIO_STORE, 'readwrite');
+        transaction.objectStore(VERB_AUDIO_STORE).delete(VERB_AUDIO_KEY);
+        transaction.addEventListener('complete', () => {
+          db.close();
+          resolve();
+        });
+        transaction.addEventListener('abort', () => {
+          db.close();
+          reject(transaction.error ?? new Error('Audio delete failed'));
+        });
+        transaction.addEventListener('error', () => {
+          db.close();
+          reject(transaction.error ?? new Error('Audio delete failed'));
+        });
+      });
+    }
+
+    function setVerbAudioBlob(blob, message) {
+      if (verbAudioState.url) URL.revokeObjectURL(verbAudioState.url);
+      verbAudioState.blob = blob;
+      verbAudioState.url = blob ? URL.createObjectURL(blob) : null;
+      if (message) verbAudioState.message = message;
+      renderVerbAudio();
+    }
+
+    function renderVerbAudio() {
+      const hasRecording = Boolean(verbAudioState.blob && verbAudioState.url);
+      if (els.verbAudioPlayback) {
+        els.verbAudioPlayback.loop = verbAudioState.loop;
+        if (hasRecording && els.verbAudioPlayback.src !== verbAudioState.url) {
+          els.verbAudioPlayback.src = verbAudioState.url;
+        }
+        if (!hasRecording) {
+          els.verbAudioPlayback.removeAttribute('src');
+          els.verbAudioPlayback.load();
+        }
+        els.verbAudioPlayback.classList.toggle('hidden', !hasRecording);
+      }
+
+      document.querySelectorAll('[data-verb-audio-action]').forEach((button) => {
+        const action = button.dataset.verbAudioAction;
+        if (action === 'record-start') button.disabled = verbAudioState.recording;
+        if (action === 'record-stop') button.disabled = !verbAudioState.recording;
+        if (action === 'play') button.disabled = verbAudioState.recording || !hasRecording;
+        if (action === 'clear-recording') button.disabled = verbAudioState.recording || !hasRecording;
+        if (action === 'toggle-loop') {
+          button.classList.toggle('verb-audio-loop-active', verbAudioState.loop);
+          button.textContent = verbAudioState.loop ? 'Повтор включён' : 'Повторять бесконечно';
+        }
+      });
+
+      if (els.verbAudioStatus) {
+        els.verbAudioStatus.classList.toggle('recording', verbAudioState.recording);
+        els.verbAudioStatus.textContent = verbAudioState.recording
+          ? 'Идёт запись. Читай таблицу, потом нажми «Стоп».'
+          : verbAudioState.message;
+      }
+    }
+
+    async function startVerbAudioRecording() {
+      if (verbAudioState.recording) return;
+      if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
+        verbAudioState.message = 'Диктофон доступен только в современном браузере с доступом к микрофону.';
+        renderVerbAudio();
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const recorder = new MediaRecorder(stream);
+        verbAudioState.stream = stream;
+        verbAudioState.recorder = recorder;
+        verbAudioState.chunks = [];
+        verbAudioState.recording = true;
+        verbAudioState.message = 'Идёт запись.';
+
+        recorder.addEventListener('dataavailable', (event) => {
+          if (event.data.size > 0) verbAudioState.chunks.push(event.data);
+        });
+
+        recorder.addEventListener('stop', async () => {
+          const blob = new Blob(verbAudioState.chunks, { type: recorder.mimeType || 'audio/webm' });
+          verbAudioState.stream?.getTracks().forEach((track) => track.stop());
+          verbAudioState.stream = null;
+          verbAudioState.recorder = null;
+          verbAudioState.recording = false;
+          verbAudioState.chunks = [];
+
+          if (!blob.size) {
+            verbAudioState.message = 'Запись получилась пустой. Попробуй ещё раз.';
+            renderVerbAudio();
+            return;
+          }
+
+          setVerbAudioBlob(blob, 'Запись готова. Сохраняю её в браузере.');
+          try {
+            await saveVerbRecording(blob);
+            verbAudioState.message = 'Запись готова и сохранена. Нажми «Воспроизвести» или ▶.';
+          } catch (error) {
+            verbAudioState.message = 'Запись готова, но браузер не дал сохранить её после закрытия.';
+          }
+          renderVerbAudio();
+        });
+
+        recorder.start();
+        renderVerbAudio();
+      } catch (error) {
+        verbAudioState.recording = false;
+        verbAudioState.stream?.getTracks().forEach((track) => track.stop());
+        verbAudioState.stream = null;
+        verbAudioState.recorder = null;
+        verbAudioState.message = 'Браузер не дал доступ к микрофону. Разреши микрофон для сайта и попробуй ещё раз.';
+        renderVerbAudio();
+      }
+    }
+
+    function stopVerbAudioRecording() {
+      if (verbAudioState.recorder && verbAudioState.recording) {
+        verbAudioState.recorder.stop();
+      }
+    }
+
+    function playVerbAudioRecording() {
+      if (!verbAudioState.url || !els.verbAudioPlayback) return;
+      els.verbAudioPlayback.loop = verbAudioState.loop;
+      els.verbAudioPlayback.currentTime = 0;
+      els.verbAudioPlayback.play().catch(() => {
+        verbAudioState.message = 'Браузер не запустил звук. Нажми ▶ в аудиоплеере.';
+        renderVerbAudio();
+      });
+    }
+
+    function toggleVerbAudioLoop() {
+      verbAudioState.loop = !verbAudioState.loop;
+      localStorage.setItem(VERB_AUDIO_LOOP_KEY, String(verbAudioState.loop));
+      if (els.verbAudioPlayback) els.verbAudioPlayback.loop = verbAudioState.loop;
+      verbAudioState.message = verbAudioState.loop
+        ? 'Бесконечный повтор включён. Запись будет крутиться по кругу.'
+        : 'Бесконечный повтор выключен.';
+      renderVerbAudio();
+    }
+
+    async function clearVerbAudioRecording() {
+      if (verbAudioState.recording) return;
+      setVerbAudioBlob(null, 'Запись удалена.');
+      try {
+        await deleteVerbRecording();
+      } catch (error) {
+        verbAudioState.message = 'Запись удалена с экрана, но браузер не ответил по постоянному хранилищу.';
+        renderVerbAudio();
+      }
+    }
+
+    async function initVerbAudio() {
+      renderVerbAudio();
+      try {
+        const blob = await loadVerbRecording();
+        if (blob) {
+          setVerbAudioBlob(blob, 'Сохранённая запись загружена. Можно сразу слушать.');
+        } else {
+          verbAudioState.message = 'Записи пока нет. Нажми «Записать», потом «Стоп».';
+          renderVerbAudio();
+        }
+      } catch (error) {
+        verbAudioState.message = 'Постоянное хранилище браузера недоступно, но новую запись можно сделать на время текущей вкладки.';
+        renderVerbAudio();
+      }
+    }
+
     async function startRecording(recordingMode = 'translate') {
       if (textState.recording) return;
       if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
@@ -1982,6 +2322,13 @@
       if (petraAction === 'record-stop') stopRecording();
       if (petraAction === 'clear-recording') clearCurrentRecording();
 
+      const verbAudioAction = button.dataset.verbAudioAction;
+      if (verbAudioAction === 'record-start') startVerbAudioRecording();
+      if (verbAudioAction === 'record-stop') stopVerbAudioRecording();
+      if (verbAudioAction === 'play') playVerbAudioRecording();
+      if (verbAudioAction === 'toggle-loop') toggleVerbAudioLoop();
+      if (verbAudioAction === 'clear-recording') clearVerbAudioRecording();
+
       if (button.dataset.wordId) {
         stopSprint();
         const index = WORDS.findIndex((word) => word.id === Number(button.dataset.wordId));
@@ -2003,6 +2350,8 @@
     });
 
     document.addEventListener('keydown', (event) => {
+      if (activeSection === 'verbs') return;
+
       if (isTextSection(activeSection)) {
         if (event.key === 'ArrowRight') nextSentence();
         if (event.key === 'ArrowLeft') previousSentence();
@@ -2076,6 +2425,7 @@
     window.addEventListener('scroll', hideWordPopover, { passive: true });
     window.addEventListener('resize', hideWordPopover);
 
+    initVerbAudio();
     render();
   </script>
 </body>
