@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Неправильные арабские глаголы</title>
+  <title>Недостаточные арабские глаголы</title>
   <link rel="icon" href="data:,">
   <style>
     :root {
@@ -107,9 +107,7 @@
       white-space: nowrap;
     }
 
-    .type {
-      font-weight: 700;
-    }
+    .type { font-weight: 700; }
 
     .example {
       text-align: right;
@@ -170,28 +168,16 @@
       word-break: keep-all;
     }
 
-    .single .ar {
-      font-size: 27px;
-    }
+    .single .ar { font-size: 27px; }
 
     .one-form .form {
       justify-content: flex-end;
       border-top: 0;
     }
 
-    .one-form .label {
-      display: none;
-    }
+    .one-form .label { display: none; }
 
-    .one-form .ar {
-      font-size: 30px;
-    }
-
-    .note {
-      color: var(--warn);
-      font-size: 14px;
-      margin-top: 8px;
-    }
+    .one-form .ar { font-size: 30px; }
 
     @media (max-width: 1100px) {
       .grid { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
@@ -227,8 +213,8 @@
 <body>
   <header>
     <div class="bar">
-      <h1>Неправильные глаголы по Яковенко</h1>
-      <p class="hint">Масдары и причастия даны в именительном: обычные формы с ـٌ, формы на ـونَ / ـٍ / ـى пишутся по-своему.</p>
+      <h1>Недостаточные глаголы по породам</h1>
+      <p class="hint">Только недостаточные: I, II, III, IV, V, VI, VII, VIII и X. IX породу здесь не берём.</p>
       <div class="actions">
         <button type="button" id="bigger">Крупнее</button>
         <button type="button" id="smaller">Мельче</button>
@@ -240,62 +226,6 @@
 
   <main>
     <article class="verb">
-      <div class="verb-head"><div class="breed">I порода</div><div class="type">подобный правильным</div><div class="example">كَتَبَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">كَتَبَ</span></div><div class="form"><span class="label">я</span><span class="ar">كَتَبْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">كَتَبْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">كَتَبْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَكْتُبُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَكْتُبُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَكْتُبُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَكْتُبِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَكْتُبَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَكْتُبَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَكْتُبِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَكْتُبْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَكْتُبْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَكْتُبِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اُكْتُبْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اُكْتُبِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اُكْتُبُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">كَاتِبٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">كَاتِبَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">كَاتِبُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مَكْتُوبٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مَكْتُوبَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مَكْتُوبُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">كِتَابَةٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">I порода</div><div class="type">хамзованный</div><div class="example">أَكَلَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">أَكَلَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَكَلْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">أَكَلْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَكَلْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَأْكُلُ</span></div><div class="form"><span class="label">я</span><span class="ar">آكُلُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَأْكُلُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَأْكُلِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَأْكُلَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ آكُلَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَأْكُلِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَأْكُلْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ آكُلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَأْكُلِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">كُلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">كُلِي</span></div><div class="form"><span class="label">вы</span><span class="ar">كُلُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">آكِلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">آكِلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">آكِلُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مَأْكُولٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مَأْكُولَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مَأْكُولُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">أَكْلٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">I порода</div><div class="type">удвоенный</div><div class="example">رَدَّ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">رَدَّ</span></div><div class="form"><span class="label">я</span><span class="ar">رَدَدْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">رَدَدْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">رَدَدْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَرُدُّ</span></div><div class="form"><span class="label">я</span><span class="ar">أَرُدُّ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَرُدُّ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَرُدِّينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَرُدَّ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَرُدَّ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَرُدِّي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَرُدَّ / يَرْدُدْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَرُدَّ / أَرْدُدْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَرُدِّي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">رُدَّ / اُرْدُدْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">رُدِّي</span></div><div class="form"><span class="label">вы</span><span class="ar">رُدُّوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">رَادٌّ</span></div><div class="form"><span class="label">ж.</span><span class="ar">رَادَّةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">رَادُّونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مَرْدُودٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مَرْدُودَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مَرْدُودُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">رَدٌّ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">I порода</div><div class="type">пустой</div><div class="example">قَالَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">قَالَ</span></div><div class="form"><span class="label">я</span><span class="ar">قُلْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">قُلْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">قُلْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَقُولُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَقُولُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَقُولُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَقُولِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَقُولَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَقُولَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَقُولِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَقُلْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَقُلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَقُولِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">قُلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">قُولِي</span></div><div class="form"><span class="label">вы</span><span class="ar">قُولُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">قَائِلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">قَائِلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">قَائِلُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مَقُولٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مَقُولَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مَقُولُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">قَوْلٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
       <div class="verb-head"><div class="breed">I порода</div><div class="type">недостаточный</div><div class="example">دَعَا</div></div>
       <div class="grid">
         <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">دَعَا</span></div><div class="form"><span class="label">я</span><span class="ar">دَعَوْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">دَعَوْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">دَعَوْتِ</span></div></section>
@@ -305,35 +235,7 @@
         <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اُدْعُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اُدْعِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اُدْعُوا</span></div></section>
         <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">دَاعٍ</span></div><div class="form"><span class="label">ж.</span><span class="ar">دَاعِيَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">دَاعُونَ</span></div></section>
         <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مَدْعُوٌّ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مَدْعُوَّةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مَدْعُوُّونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">دُعَاءٌ / دَعْوَةٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">II порода</div><div class="type">подобный правильным</div><div class="example">عَلَّمَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">عَلَّمَ</span></div><div class="form"><span class="label">я</span><span class="ar">عَلَّمْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">عَلَّمْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">عَلَّمْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يُعَلِّمُ</span></div><div class="form"><span class="label">я</span><span class="ar">أُعَلِّمُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تُعَلِّمُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تُعَلِّمِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يُعَلِّمَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أُعَلِّمَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تُعَلِّمِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يُعَلِّمْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أُعَلِّمْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تُعَلِّمِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">عَلِّمْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">عَلِّمِي</span></div><div class="form"><span class="label">вы</span><span class="ar">عَلِّمُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُعَلِّمٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُعَلِّمَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُعَلِّمُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُعَلَّمٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُعَلَّمَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُعَلَّمُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">تَعْلِيمٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">II порода</div><div class="type">пустой</div><div class="example">حَوَّلَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">حَوَّلَ</span></div><div class="form"><span class="label">я</span><span class="ar">حَوَّلْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">حَوَّلْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">حَوَّلْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يُحَوِّلُ</span></div><div class="form"><span class="label">я</span><span class="ar">أُحَوِّلُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تُحَوِّلُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تُحَوِّلِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يُحَوِّلَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أُحَوِّلَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تُحَوِّلِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يُحَوِّلْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أُحَوِّلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تُحَوِّلِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">حَوِّلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">حَوِّلِي</span></div><div class="form"><span class="label">вы</span><span class="ar">حَوِّلُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُحَوِّلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُحَوِّلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُحَوِّلُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُحَوَّلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُحَوَّلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُحَوَّلُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">تَحْوِيلٌ</span></div></section>
+        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"></span><span class="ar">دُعَاءٌ / دَعْوَةٌ</span></div></section>
       </div>
     </article>
 
@@ -347,35 +249,7 @@
         <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">رَبِّ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">رَبِّي</span></div><div class="form"><span class="label">вы</span><span class="ar">رَبُّوا</span></div></section>
         <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُرَبٍّ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُرَبِّيَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُرَبُّونَ</span></div></section>
         <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُرَبًّى</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُرَبَّاةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُرَبَّوْنَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">تَرْبِيَةٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">III порода</div><div class="type">подобный правильным</div><div class="example">قَابَلَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">قَابَلَ</span></div><div class="form"><span class="label">я</span><span class="ar">قَابَلْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">قَابَلْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">قَابَلْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يُقَابِلُ</span></div><div class="form"><span class="label">я</span><span class="ar">أُقَابِلُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تُقَابِلُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تُقَابِلِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يُقَابِلَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أُقَابِلَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تُقَابِلِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يُقَابِلْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أُقَابِلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تُقَابِلِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">قَابِلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">قَابِلِي</span></div><div class="form"><span class="label">вы</span><span class="ar">قَابِلُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُقَابِلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُقَابِلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُقَابِلُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُقَابَلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُقَابَلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُقَابَلُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">مُقَابَلَةٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">III порода</div><div class="type">пустой</div><div class="example">حَاوَلَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">حَاوَلَ</span></div><div class="form"><span class="label">я</span><span class="ar">حَاوَلْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">حَاوَلْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">حَاوَلْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يُحَاوِلُ</span></div><div class="form"><span class="label">я</span><span class="ar">أُحَاوِلُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تُحَاوِلُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تُحَاوِلِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يُحَاوِلَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أُحَاوِلَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تُحَاوِلِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يُحَاوِلْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أُحَاوِلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تُحَاوِلِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">حَاوِلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">حَاوِلِي</span></div><div class="form"><span class="label">вы</span><span class="ar">حَاوِلُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُحَاوِلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُحَاوِلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُحَاوِلُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُحَاوَلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُحَاوَلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُحَاوَلُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">مُحَاوَلَةٌ</span></div></section>
+        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"></span><span class="ar">تَرْبِيَةٌ</span></div></section>
       </div>
     </article>
 
@@ -389,35 +263,7 @@
         <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">نَادِ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">نَادِي</span></div><div class="form"><span class="label">вы</span><span class="ar">نَادُوا</span></div></section>
         <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُنَادٍ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُنَادِيَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُنَادُونَ</span></div></section>
         <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُنَادًى</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُنَادَاةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُنَادَوْنَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">مُنَادَاةٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">IV порода</div><div class="type">подобный правильным</div><div class="example">أَخْرَجَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">أَخْرَجَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَخْرَجْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">أَخْرَجْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَخْرَجْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يُخْرِجُ</span></div><div class="form"><span class="label">я</span><span class="ar">أُخْرِجُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تُخْرِجُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تُخْرِجِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يُخْرِجَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أُخْرِجَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تُخْرِجِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يُخْرِجْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أُخْرِجْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تُخْرِجِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">أَخْرِجْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَخْرِجِي</span></div><div class="form"><span class="label">вы</span><span class="ar">أَخْرِجُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُخْرِجٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُخْرِجَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُخْرِجُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُخْرَجٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُخْرَجَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُخْرَجُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">إِخْرَاجٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">IV порода</div><div class="type">пустой</div><div class="example">أَقَامَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">أَقَامَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَقَمْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">أَقَمْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَقَمْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يُقِيمُ</span></div><div class="form"><span class="label">я</span><span class="ar">أُقِيمُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تُقِيمُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تُقِيمِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يُقِيمَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أُقِيمَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تُقِيمِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يُقِمْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أُقِمْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تُقِيمِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">أَقِمْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَقِيمِي</span></div><div class="form"><span class="label">вы</span><span class="ar">أَقِيمُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُقِيمٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُقِيمَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُقِيمُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُقَامٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُقَامَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُقَامُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">إِقَامَةٌ</span></div></section>
+        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"></span><span class="ar">مُنَادَاةٌ</span></div></section>
       </div>
     </article>
 
@@ -431,35 +277,7 @@
         <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">أَعْطِ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَعْطِي</span></div><div class="form"><span class="label">вы</span><span class="ar">أَعْطُوا</span></div></section>
         <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُعْطٍ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُعْطِيَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُعْطُونَ</span></div></section>
         <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُعْطًى</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُعْطَاةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُعْطَوْنَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">إِعْطَاءٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">V порода</div><div class="type">подобный правильным</div><div class="example">تَعَلَّمَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">تَعَلَّمَ</span></div><div class="form"><span class="label">я</span><span class="ar">تَعَلَّمْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَعَلَّمْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَعَلَّمْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَتَعَلَّمُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَتَعَلَّمُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَتَعَلَّمُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَتَعَلَّمِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَتَعَلَّمَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَتَعَلَّمَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَتَعَلَّمِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَتَعَلَّمْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَتَعَلَّمْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَتَعَلَّمِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">تَعَلَّمْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَعَلَّمِي</span></div><div class="form"><span class="label">вы</span><span class="ar">تَعَلَّمُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَعَلِّمٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَعَلِّمَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَعَلِّمُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَعَلَّمٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَعَلَّمَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَعَلَّمُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">تَعَلُّمٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">V порода</div><div class="type">пустой</div><div class="example">تَحَوَّلَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">تَحَوَّلَ</span></div><div class="form"><span class="label">я</span><span class="ar">تَحَوَّلْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَحَوَّلْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَحَوَّلْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَتَحَوَّلُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَتَحَوَّلُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَتَحَوَّلُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَتَحَوَّلِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَتَحَوَّلَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَتَحَوَّلَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَتَحَوَّلِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَتَحَوَّلْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَتَحَوَّلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَتَحَوَّلِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">تَحَوَّلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَحَوَّلِي</span></div><div class="form"><span class="label">вы</span><span class="ar">تَحَوَّلُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَحَوِّلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَحَوِّلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَحَوِّلُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَحَوَّلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَحَوَّلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَحَوَّلُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">تَحَوُّلٌ</span></div></section>
+        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"></span><span class="ar">إِعْطَاءٌ</span></div></section>
       </div>
     </article>
 
@@ -473,21 +291,7 @@
         <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">تَوَلَّ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَوَلَّي</span></div><div class="form"><span class="label">вы</span><span class="ar">تَوَلَّوْا</span></div></section>
         <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَوَلٍّ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَوَلِّيَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَوَلُّونَ</span></div></section>
         <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَوَلًّى</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَوَلَّاةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَوَلَّوْنَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">تَوَلٍّ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">VI порода</div><div class="type">подобный правильным</div><div class="example">تَقَابَلَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">تَقَابَلَ</span></div><div class="form"><span class="label">я</span><span class="ar">تَقَابَلْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَقَابَلْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَقَابَلْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَتَقَابَلُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَتَقَابَلُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَتَقَابَلُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَتَقَابَلِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَتَقَابَلَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَتَقَابَلَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَتَقَابَلِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَتَقَابَلْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَتَقَابَلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَتَقَابَلِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">تَقَابَلْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَقَابَلِي</span></div><div class="form"><span class="label">вы</span><span class="ar">تَقَابَلُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَقَابِلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَقَابِلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَقَابِلُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَقَابَلٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَقَابَلَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَقَابَلُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">تَقَابُلٌ</span></div></section>
+        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"></span><span class="ar">تَوَلٍّ</span></div></section>
       </div>
     </article>
 
@@ -501,105 +305,35 @@
         <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">تَلَاقَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَلَاقَي</span></div><div class="form"><span class="label">вы</span><span class="ar">تَلَاقَوْا</span></div></section>
         <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَلَاقٍ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَلَاقِيَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَلَاقُونَ</span></div></section>
         <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُتَلَاقًى</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُتَلَاقَاةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُتَلَاقَوْنَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">تَلَاقٍ</span></div></section>
+        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"></span><span class="ar">تَلَاقٍ</span></div></section>
       </div>
     </article>
 
     <article class="verb">
-      <div class="verb-head"><div class="breed">VII порода</div><div class="type">подобный правильным</div><div class="example">اِنْكَسَرَ</div></div>
+      <div class="verb-head"><div class="breed">VII порода</div><div class="type">недостаточный</div><div class="example">اِنْتَهَى</div></div>
       <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">اِنْكَسَرَ</span></div><div class="form"><span class="label">я</span><span class="ar">اِنْكَسَرْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">اِنْكَسَرْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِنْكَسَرْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَنْكَسِرُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْكَسِرُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَنْكَسِرُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَنْكَسِرِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَنْكَسِرَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَنْكَسِرَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَنْكَسِرِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَنْكَسِرْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَنْكَسِرْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَنْكَسِرِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اِنْكَسِرْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِنْكَسِرِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اِنْكَسِرُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُنْكَسِرٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُنْكَسِرَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُنْكَسِرُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُنْكَسَرٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُنْكَسَرَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُنْكَسَرُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">اِنْكِسَارٌ</span></div></section>
+        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">اِنْتَهَى</span></div><div class="form"><span class="label">я</span><span class="ar">اِنْتَهَيْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">اِنْتَهَيْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِنْتَهَيْتِ</span></div></section>
+        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَنْتَهِي</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْتَهِي</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَنْتَهِي</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَنْتَهِينَ</span></div></section>
+        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَنْتَهِيَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَنْتَهِيَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَنْتَهِي</span></div></section>
+        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَنْتَهِ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَنْتَهِ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَنْتَهِي</span></div></section>
+        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اِنْتَهِ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِنْتَهِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اِنْتَهُوا</span></div></section>
+        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُنْتَهٍ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُنْتَهِيَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُنْتَهُونَ</span></div></section>
+        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُنْتَهًى</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُنْتَهَاةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُنْتَهَوْنَ</span></div></section>
+        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"></span><span class="ar">اِنْتِهَاءٌ</span></div></section>
       </div>
     </article>
 
     <article class="verb">
-      <div class="verb-head"><div class="breed">VII порода</div><div class="type">пустой</div><div class="example">اِنْقَادَ</div></div>
+      <div class="verb-head"><div class="breed">VIII порода</div><div class="type">недостаточный</div><div class="example">اِشْتَرَى</div></div>
       <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">اِنْقَادَ</span></div><div class="form"><span class="label">я</span><span class="ar">اِنْقَدْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">اِنْقَدْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِنْقَدْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَنْقَادُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْقَادُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَنْقَادُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَنْقَادِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَنْقَادَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَنْقَادَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَنْقَادِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَنْقَدْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَنْقَدْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَنْقَادِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اِنْقَدْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِنْقَادِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اِنْقَادُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُنْقَادٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُنْقَادَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُنْقَادُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُنْقَادٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُنْقَادَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُنْقَادُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">اِنْقِيَادٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">VIII порода</div><div class="type">подобный правильным</div><div class="example">اِجْتَمَعَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">اِجْتَمَعَ</span></div><div class="form"><span class="label">я</span><span class="ar">اِجْتَمَعْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">اِجْتَمَعْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِجْتَمَعْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَجْتَمِعُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَجْتَمِعُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَجْتَمِعُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَجْتَمِعِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَجْتَمِعَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَجْتَمِعَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَجْتَمِعِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَجْتَمِعْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَجْتَمِعْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَجْتَمِعِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اِجْتَمِعْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِجْتَمِعِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اِجْتَمِعُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُجْتَمِعٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُجْتَمِعَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُجْتَمِعُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُجْتَمَعٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُجْتَمَعَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُجْتَمَعُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">اِجْتِمَاعٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">VIII порода</div><div class="type">пустой</div><div class="example">اِخْتَارَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">اِخْتَارَ</span></div><div class="form"><span class="label">я</span><span class="ar">اِخْتَرْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">اِخْتَرْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِخْتَرْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَخْتَارُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَخْتَارُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَخْتَارُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَخْتَارِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَخْتَارَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَخْتَارَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَخْتَارِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَخْتَرْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَخْتَرْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَخْتَارِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اِخْتَرْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِخْتَارِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اِخْتَارُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُخْتَارٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُخْتَارَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُخْتَارُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُخْتَارٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُخْتَارَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُخْتَارُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">اِخْتِيَارٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">IX порода</div><div class="type">подобный правильным</div><div class="example">اِحْمَرَّ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">اِحْمَرَّ</span></div><div class="form"><span class="label">я</span><span class="ar">اِحْمَرَرْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">اِحْمَرَرْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِحْمَرَرْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَحْمَرُّ</span></div><div class="form"><span class="label">я</span><span class="ar">أَحْمَرُّ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَحْمَرُّ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَحْمَرِّينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَحْمَرَّ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَحْمَرَّ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَحْمَرِّي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَحْمَرَّ / يَحْمَرِرْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَحْمَرَّ / أَحْمَرِرْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَحْمَرِّي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="note">обычно почти не нужно</div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُحْمَرٌّ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُحْمَرَّةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُحْمَرُّونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="note">обычно нет</div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">اِحْمِرَارٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">X порода</div><div class="type">подобный правильным</div><div class="example">اِسْتَخْرَجَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">اِسْتَخْرَجَ</span></div><div class="form"><span class="label">я</span><span class="ar">اِسْتَخْرَجْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">اِسْتَخْرَجْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِسْتَخْرَجْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَسْتَخْرِجُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَسْتَخْرِجُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَسْتَخْرِجُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَسْتَخْرِجِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَسْتَخْرِجَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَسْتَخْرِجَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَسْتَخْرِجِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَسْتَخْرِجْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَسْتَخْرِجْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَسْتَخْرِجِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اِسْتَخْرِجْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِسْتَخْرِجِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اِسْتَخْرِجُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُسْتَخْرِجٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُسْتَخْرِجَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُسْتَخْرِجُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُسْتَخْرَجٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُسْتَخْرَجَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُسْتَخْرَجُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">اِسْتِخْرَاجٌ</span></div></section>
-      </div>
-    </article>
-
-    <article class="verb">
-      <div class="verb-head"><div class="breed">X порода</div><div class="type">пустой</div><div class="example">اِسْتَفَادَ</div></div>
-      <div class="grid">
-        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">اِسْتَفَادَ</span></div><div class="form"><span class="label">я</span><span class="ar">اِسْتَفَدْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">اِسْتَفَدْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِسْتَفَدْتِ</span></div></section>
-        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَسْتَفِيدُ</span></div><div class="form"><span class="label">я</span><span class="ar">أَسْتَفِيدُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَسْتَفِيدُ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَسْتَفِيدِينَ</span></div></section>
-        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَسْتَفِيدَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَسْتَفِيدَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَسْتَفِيدِي</span></div></section>
-        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَسْتَفِدْ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَسْتَفِدْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَسْتَفِيدِي</span></div></section>
-        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اِسْتَفِدْ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِسْتَفِيدِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اِسْتَفِيدُوا</span></div></section>
-        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُسْتَفِيدٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُسْتَفِيدَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُسْتَفِيدُونَ</span></div></section>
-        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُسْتَفَادٌ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُسْتَفَادَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُسْتَفَادُونَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">اِسْتِفَادَةٌ</span></div></section>
+        <section class="cell"><h2>Перфект</h2><div class="form"><span class="label">он</span><span class="ar">اِشْتَرَى</span></div><div class="form"><span class="label">я</span><span class="ar">اِشْتَرَيْتُ</span></div><div class="form"><span class="label">ты м.</span><span class="ar">اِشْتَرَيْتَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِشْتَرَيْتِ</span></div></section>
+        <section class="cell"><h2>Имперфект</h2><div class="form"><span class="label">он</span><span class="ar">يَشْتَرِي</span></div><div class="form"><span class="label">я</span><span class="ar">أَشْتَرِي</span></div><div class="form"><span class="label">ты м.</span><span class="ar">تَشْتَرِي</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">تَشْتَرِينَ</span></div></section>
+        <section class="cell"><h2>Сослагательное</h2><div class="form"><span class="label">он</span><span class="ar">أَنْ يَشْتَرِيَ</span></div><div class="form"><span class="label">я</span><span class="ar">أَنْ أَشْتَرِيَ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">أَنْ تَشْتَرِي</span></div></section>
+        <section class="cell"><h2>Усеченное</h2><div class="form"><span class="label">он</span><span class="ar">لَمْ يَشْتَرِ</span></div><div class="form"><span class="label">я</span><span class="ar">لَمْ أَشْتَرِ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">لَمْ تَشْتَرِي</span></div></section>
+        <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اِشْتَرِ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِشْتَرِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اِشْتَرُوا</span></div></section>
+        <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُشْتَرٍ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُشْتَرِيَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُشْتَرُونَ</span></div></section>
+        <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُشْتَرًى</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُشْتَرَاةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُشْتَرَوْنَ</span></div></section>
+        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"></span><span class="ar">اِشْتِرَاءٌ</span></div></section>
       </div>
     </article>
 
@@ -613,7 +347,7 @@
         <section class="cell"><h2>Повелительное</h2><div class="form"><span class="label">ты м.</span><span class="ar">اِسْتَدْعِ</span></div><div class="form"><span class="label">ты ж.</span><span class="ar">اِسْتَدْعِي</span></div><div class="form"><span class="label">вы</span><span class="ar">اِسْتَدْعُوا</span></div></section>
         <section class="cell"><h2>Действительное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُسْتَدْعٍ</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُسْتَدْعِيَةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُسْتَدْعُونَ</span></div></section>
         <section class="cell"><h2>Страдательное причастие</h2><div class="form"><span class="label">м.</span><span class="ar">مُسْتَدْعًى</span></div><div class="form"><span class="label">ж.</span><span class="ar">مُسْتَدْعَاةٌ</span></div><div class="form"><span class="label">мн.</span><span class="ar">مُسْتَدْعَوْنَ</span></div></section>
-        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"> </span><span class="ar">اِسْتِدْعَاءٌ</span></div></section>
+        <section class="cell single"><h2>Масдар</h2><div class="form"><span class="label"></span><span class="ar">اِسْتِدْعَاءٌ</span></div></section>
       </div>
     </article>
   </main>
